@@ -13,7 +13,7 @@ import Button from '@client/components/buttons/Button.vue'
     <div class="mt-10">
       <div class="flex flex-col items-center py-5 text-center">
         <h1 class="sr-only">
-          Movie Night
+          Movie Nite
         </h1>
 
         <img

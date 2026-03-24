@@ -1,11 +1,21 @@
 <mjml>
   <mj-head>
-    <mj-title>Movie Reminder</mj-title>
+    <mj-title>Movie Nite Reminder</mj-title>
 
     <mj-attributes>
-      <mj-all font-family="Verdana, sans-serif" />
+      <mj-all font-family="Verdana, sans-serif" background-color="#040404" />
 
-      <mj-text font-size="24px" color="#111827" line-height="24px"/>
+      <mj-text font-size="24px" color="#D5CCCC" line-height="24px"/>
+
+      <mj-class
+        name="button"
+        background-color="#F25785"
+        color="#040404"
+        font-size="16px"
+        font-weight="bold"
+        width="120px"
+        align="center"
+      />
     </mj-attributes>
 
     <mj-html-attributes>
@@ -17,21 +27,35 @@
         <mj-html-attribute name="role">presentation</mj-html-attribute>
       </mj-selector>
     </mj-html-attributes>
+
+    <mj-style>
+      a {
+        color: #F25785;
+      }
+
+      a:hover {
+        color: #F4ABBB;
+      }
+
+      a:visited {
+        color: #F25785;
+      }
+    </mj-style>
   </mj-head>
 
   <mj-body>
-    <mj-section full-width="full-width" background-color="#F9FAFB">
+    <mj-section full-width="full-width">
       <mj-column width="100%">
         <mj-text
           padding="0px"
           align="center"
           font-size="16px"
-          color="#7c3aed"
-        >Wowell World Studios Presents: Thursday&nbsp;Night&nbsp;Movie&nbsp;Club</mj-text>
+          color="#F25785"
+        >Wowell World Studios Presents: Movie Nite Club</mj-text>
       </mj-column>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#e9d5ff">
+    <mj-section full-width="full-width">
       <mj-column width="100%">
         <mj-text
           align="center"
@@ -47,18 +71,13 @@
         >{{theme}}</mj-text>
 
         <mj-button
-          background-color="#7c3aed"
-          color="#ffffff"
-          font-size="16px"
-          font-weight="bold"
-          align="center"
-          width="120px"
+          mj-class="button"
           href="https://movienite.club?rsvp={{eventId}}"
         >RSVP</mj-button>
       </mj-column>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#F9FAFB">
+    <mj-section full-width="full-width">
       <mj-raw>{{#each movies}}</mj-raw>
         <mj-column width="50%">
           <mj-text
@@ -66,7 +85,7 @@
             font-size="30px"
             line-height="30px"
             font-weight="bold"
-            color="#111827"
+            color="#F25785"
             padding="5px"
           >{{title}}</mj-text>
 
@@ -80,7 +99,7 @@
       <mj-raw>{{/each}}</mj-raw>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#e9d5ff">
+    <mj-section full-width="full-width">
       <mj-column width="500px">
         <mj-raw>{{#each movies}}</mj-raw>
           <mj-text font-size="20px" padding="15px 25px">
@@ -90,18 +109,13 @@
 
         <mj-button
           padding="30px 0px"
-          background-color="#7c3aed"
-          color="#ffffff"
-          font-size="16px"
-          font-weight="bold"
-          align="center"
-          width="120px"
+          mj-class="button"
           href="https://movienite.club?rsvp={{eventId}}"
         >RSVP</mj-button>
       </mj-column>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#F9FAFB">
+    <mj-section full-width="full-width">
       <mj-column width="100%">
         <mj-text
           align="center"

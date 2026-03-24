@@ -3,9 +3,9 @@
     <mj-title>Movie Reminder</mj-title>
 
     <mj-attributes>
-      <mj-all font-family="Verdana, sans-serif" />
+      <mj-all font-family="Verdana, sans-serif" background-color="#040404" />
 
-      <mj-text font-size="16px" color="#111827" line-height="16px"/>
+      <mj-text font-size="16px" color="#D5CCCC" line-height="16px"/>
     </mj-attributes>
 
     <mj-html-attributes>
@@ -20,20 +20,20 @@
 
     <mj-style>
       a {
-        color: #7c3aed;
+        color: #F25785;
       }
 
       a:hover {
-        color: #a56eff;
+        color: #F4ABBB;
       }
 
       a:visited {
-        color: #5200a3;
+        color: #F25785;
       }
     </mj-style>
   </mj-head>
   <mj-body>
-    <mj-section full-width="full-width" background-color="#F9FAFB">
+    <mj-section full-width="full-width">
       <mj-column width="100%">
         <mj-text
           padding="0px"
@@ -41,7 +41,7 @@
           font-size="12px"
         >
           <a href="https://movienite.club/">
-            Wowell World Studios Presents: Thursday&nbsp;Night&nbsp;Movie&nbsp;Club
+            Wowell World Studios Presents: Movie Nite Club
           </a>
         </mj-text>
 
@@ -53,7 +53,7 @@
       </mj-column>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#e9d5ff">
+    <mj-section full-width="full-width" >
       <mj-column width="100%">
         <mj-text
           align="center"
@@ -76,14 +76,14 @@
       </mj-column>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#F9FAFB">
+    <mj-section full-width="full-width">
       <mj-raw>{{#each movies}}</mj-raw>
         <mj-column width="50%">
           <mj-text
             align="center"
             font-size="16px"
             font-weight="bold"
-            color="#111827"
+            color="#F25785"
             padding="5px"
           >{{title}}</mj-text>
 
@@ -97,7 +97,7 @@
       <mj-raw>{{/each}}</mj-raw>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#e9d5ff">
+    <mj-section full-width="full-width" >
       <mj-column width="400px">
         <mj-raw>{{#each movies}}</mj-raw>
           <mj-text font-size="16px" padding="15px 25px">
@@ -107,7 +107,7 @@
       </mj-column>
     </mj-section>
 
-    <mj-section full-width="full-width" background-color="#F9FAFB">
+    <mj-section full-width="full-width">
       <mj-column width="100%">
         <mj-text
           padding="0px"
@@ -115,7 +115,7 @@
           font-size="12px"
         >
           <a href="https://movienite.club">
-            Wowell World Studios Presents: Thursday&nbsp;Night&nbsp;Movie&nbsp;Club
+            Wowell World Studios Presents: Movie Nite Club
           </a>
         </mj-text>
       </mj-column>

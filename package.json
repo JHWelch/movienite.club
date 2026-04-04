@@ -53,6 +53,7 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.18",
     "@tailwindcss/vite": "^4.2.2",
+    "@types/body-parser": "^1.19.6",
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.1",
     "@types/lodash.debounce": "^4.0.9",

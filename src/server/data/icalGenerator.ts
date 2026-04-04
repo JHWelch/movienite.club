@@ -18,7 +18,7 @@ const htmlDescription = async (event: Event) => (await ejs.renderFile(
 )).replace(/\s/g, ' ')
 
 export const icalGenerator =
-  async (event: Event): Promise<string | undefined> => {
+  async (event: Event): Promise<string | null> => {
     const { error, value } = ics.createEvent({
       uid: event.dateString + '@movienite.club',
       start: event.startTime.toJSDate().getTime(),
@@ -39,7 +39,7 @@ export const icalGenerator =
     if (error) {
       console.error(error)
 
-      return undefined
+      return null
     }
 
     return value

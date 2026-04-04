@@ -111,6 +111,9 @@ importers:
       firebase-tools:
         specifier: ^15.12.0
         version: 15.12.0(@types/node@24.12.0)(encoding@0.1.13)(typescript@6.0.2)
+      globals:
+        specifier: ^17.4.0
+        version: 17.4.0
       js-confetti:
         specifier: ^0.13.1
         version: 0.13.1
@@ -2754,6 +2757,10 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+
+  globals@17.4.0:
+    resolution: {integrity: sha512-hjrNztw/VajQwOLsMNT1cbJiH2muO3OROCHnbehc8eY5JyD2gqz4AcMHPqgaOR59DjgUjYAYLeH699g/eWi2jw==}
     engines: {node: '>=18'}
 
   globby@11.1.0:
@@ -8114,6 +8121,8 @@ snapshots:
       ini: 2.0.0
 
   globals@14.0.0: {}
+
+  globals@17.4.0: {}
 
   globby@11.1.0:
     dependencies:

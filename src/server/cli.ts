@@ -6,8 +6,8 @@ import NotionAdapter from '@server/data/notion/notionAdapter'
 const arg = process.argv[2]
 
 if (arg?.replace(/^--?/, '') === 'help') {
-  console.log('Usage: npm run cli')
-  console.log('       npm run cli -- help')
+  console.log('Usage: pnpm run cli')
+  console.log('       pnpm run cli -- help')
   console.log('')
   console.log('Currently this CLI tool only outputs a CSV of watched movies')
   console.log('from the Notion database.')

@@ -4,6 +4,7 @@
   "version": "2.0.0",
   "type": "module",
   "main": "src/server/main.ts",
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "cli": "tsx src/server/cli.ts",
     "lint": "eslint",

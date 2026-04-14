@@ -21,11 +21,9 @@ const { res, mockClear } = getMockRes()
 let req: Request
 let firestore: FirestoreAdapter
 
-beforeAll(() => {
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
-})
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
 
 beforeEach(() => {
   firestore = new FirestoreAdapter(mockConfig())

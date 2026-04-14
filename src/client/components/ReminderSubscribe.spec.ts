@@ -7,18 +7,16 @@ import fetchMock from '@fetch-mock/vitest'
 
 let wrapper: VueWrapper
 
-beforeAll(() => {
-  vi.mock(import('js-confetti'), () => {
-    const confetti = vi.fn(class {
-      addConfetti: Mock
+vi.mock(import('js-confetti'), () => {
+  const confetti = vi.fn(class {
+    addConfetti: Mock
 
-      constructor () {
-        this.addConfetti = vi.fn()
-      }
-    })
-
-    return { default: confetti }
+    constructor () {
+      this.addConfetti = vi.fn()
+    }
   })
+
+  return { default: confetti }
 })
 
 beforeEach(() => {

@@ -8,6 +8,10 @@ import { rsvpModal } from '@client/state/modalState'
 import { fireConfetti } from '@client/utilities/confetti'
 import fetchMock from '@fetch-mock/vitest'
 
+vi.mock(import('@client/utilities/confetti'), () => ({
+  fireConfetti: vi.fn(),
+}))
+
 afterEach(() => {
   localStorage.removeItem('rsvp.email')
   localStorage.removeItem('rsvp.name')
@@ -67,9 +71,6 @@ describe('only name input', () => {
 
 describe('rsvp submit', () => {
   beforeEach(async () => {
-    vi.mock(import('@client/utilities/confetti'), () => ({
-      fireConfetti: vi.fn(),
-    }))
     fetchMock.mockGlobal().route('/api/events/2020-01-01/rsvp', {})
     const event = new EventFactory().build({
       eventId: '2020-01-01',

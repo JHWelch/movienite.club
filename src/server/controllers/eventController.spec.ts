@@ -1,5 +1,4 @@
 import {
-  beforeAll,
   beforeEach,
   describe,
   expect,
@@ -19,11 +18,9 @@ import MovieFactory from '@tests/support/factories/movieFactory'
 
 const { res, mockClear } = getMockRes()
 
-beforeAll(() => {
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
-})
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
 
 beforeEach(() => {
   vi.clearAllMocks()

@@ -14,10 +14,11 @@ import { TZ } from '@server/config/tz'
 
 const { res, mockClear } = getMockRes()
 
+vi.mock('firebase/firestore')
+
 beforeEach(() => {
   vitest.clearAllMocks()
   mockClear()
-  vi.mock('firebase/firestore')
 })
 
 describe('show', () => {

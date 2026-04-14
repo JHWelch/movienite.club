@@ -20,8 +20,9 @@ import { NotionMovie } from '@server/__tests__/support/notionHelpers'
 let notion: NotionAdapter
 let notionMock: NotionMock
 
+vi.mock('@notionhq/client')
+
 beforeAll(() => {
-  vi.mock('@notionhq/client')
   notionMock = new NotionMock()
 })
 

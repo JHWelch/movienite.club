@@ -27,17 +27,18 @@ const newCacheController = () => {
   return new CacheEmailTemplatesController(firestore)
 }
 
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
+vi.mock('@server/helpers/directoryPath')
+
 beforeAll(() => {
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
   MockDate.set('2021-01-01')
 })
 
 beforeEach(() => {
   vi.clearAllMocks()
   mockClear()
-  vi.mock('@server/helpers/directoryPath')
   req = getMockReq()
 })
 

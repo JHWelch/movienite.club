@@ -61,7 +61,7 @@ const reload = () => {
 }
 
 watch(events, () => nextTick(() => setTimeout(() => {
-  if (!window || !window.location?.hash) { return }
+  if (typeof window === 'undefined' || !window.location?.hash) { return }
 
   const anchor = window.location.hash.substring(1)
   if (!anchor) { return }

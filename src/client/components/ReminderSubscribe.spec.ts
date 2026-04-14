@@ -2,7 +2,7 @@
 
 import { VueWrapper, flushPromises, mount } from '@vue/test-utils'
 import ReminderSubscribe from '@client/components/ReminderSubscribe.vue'
-import { afterEach, beforeAll, beforeEach, describe, expect, it, Mock, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest'
 import fetchMock from '@fetch-mock/vitest'
 
 let wrapper: VueWrapper

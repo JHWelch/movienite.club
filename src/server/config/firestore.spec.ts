@@ -5,11 +5,12 @@ import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
 import setupFirestore from '@server/config/firestore'
 import { mockConfig } from '@tests/support/mockConfig'
 
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
+
 beforeEach(() => {
   vi.clearAllMocks()
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
 })
 
 describe('setupFirestore', () => {

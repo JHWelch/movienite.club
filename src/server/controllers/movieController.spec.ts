@@ -21,6 +21,7 @@ import { Movie } from '@server/models/movie'
 import { NotionMock } from '@tests/support/notionMock'
 import NotionAdapter from '@server/data/notion/notionAdapter'
 
+vi.mock('@notionhq/client')
 const { res, mockClear } = getMockRes()
 let req: Request
 let notionMock: NotionMock
@@ -42,7 +43,6 @@ const newMovieController = () => {
 beforeEach(() => {
   vi.clearAllMocks()
   mockClear()
-  vi.mock('@notionhq/client')
 })
 
 afterEach(() => {

@@ -1,5 +1,5 @@
 
-import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { getMockReq, getMockRes } from '@tests/support/expressMocks'
 import { CronController } from '@server/controllers/cronController'
 import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
@@ -17,11 +17,9 @@ const { res, mockClear } = getMockRes()
 let firestore: FirestoreAdapter
 let config: Config
 
-beforeAll(() => {
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
-})
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
 
 beforeEach(() => {
   mockClear()

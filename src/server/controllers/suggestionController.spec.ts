@@ -23,11 +23,12 @@ const { res, mockClear } = getMockRes()
 
 let notionMock: NotionMock
 
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
+vi.mock('@notionhq/client')
+
 beforeAll(() => {
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
-  vi.mock('@notionhq/client')
   notionMock = new NotionMock()
 })
 

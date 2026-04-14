@@ -10,9 +10,7 @@ const props = {
   modelValue: { title: '' },
 }
 
-beforeEach(() => {
-  vi.mock('lodash.debounce')
-})
+vi.mock('lodash.debounce')
 
 afterEach(() => {
   fetchMock.mockReset()

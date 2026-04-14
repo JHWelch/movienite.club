@@ -31,6 +31,12 @@ import { getMockReq, getMockRes } from '@tests/support/expressMocks'
 
 let notionMock: NotionMock
 
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
+vi.mock('@notionhq/client')
+vi.mock('@server/helpers/directoryPath')
+
 const { res, mockClear } = getMockRes()
 let req: Request
 
@@ -44,18 +50,14 @@ const newCacheController = () => {
 }
 
 beforeAll(() => {
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
+
   MockDate.set('2021-01-01T00:00:00.000Z')
-  vi.mock('@notionhq/client')
   notionMock = new NotionMock()
 })
 
 beforeEach(() => {
   vi.clearAllMocks()
   mockClear()
-  vi.mock('@server/helpers/directoryPath')
 })
 
 afterEach(() => {

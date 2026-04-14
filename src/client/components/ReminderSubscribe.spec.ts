@@ -2,23 +2,21 @@
 
 import { VueWrapper, flushPromises, mount } from '@vue/test-utils'
 import ReminderSubscribe from '@client/components/ReminderSubscribe.vue'
-import { afterEach, beforeAll, beforeEach, describe, expect, it, Mock, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest'
 import fetchMock from '@fetch-mock/vitest'
 
 let wrapper: VueWrapper
 
-beforeAll(() => {
-  vi.mock(import('js-confetti'), () => {
-    const confetti = vi.fn(class {
-      addConfetti: Mock
+vi.mock(import('js-confetti'), () => {
+  const confetti = vi.fn(class {
+    addConfetti: Mock
 
-      constructor () {
-        this.addConfetti = vi.fn()
-      }
-    })
-
-    return { default: confetti }
+    constructor () {
+      this.addConfetti = vi.fn()
+    }
   })
+
+  return { default: confetti }
 })
 
 beforeEach(() => {

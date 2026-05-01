@@ -14,9 +14,11 @@ const id = title
 </script>
 
 <template>
-  <img
-    :id="id"
-    :src="image"
-    :alt="title"
-  >
+  <div class="flex items-center justify-center w-full">
+    <img
+      :id="id"
+      :src="image"
+      :alt="title"
+    >
+  </div>
 </template>

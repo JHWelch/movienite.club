@@ -69,7 +69,7 @@
     "js-confetti": "^0.13.1",
     "jsdom": "^29.1.1",
     "lodash.debounce": "^4.0.8",
-    "mjml": "^4.18.0",
+    "mjml": "^5.1.0",
     "mockdate": "^3.0.5",
     "nodemon": "^3.1.14",
     "tailwindcss": "^4.2.4",

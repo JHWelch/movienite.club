@@ -58,7 +58,7 @@ const toggle = () => {
     class="absolute w-full right-0 top-12 bg-dark p-3 space-y-4 max-w-[500px] border-2 border-primary-dark"
   >
     <p class="text-sm">
-      Get an email reminder the day before upcoming movie nights
+      Get an email reminder the day before upcoming movie nites
     </p>
 
     <div class="flex w-full space-x-4">

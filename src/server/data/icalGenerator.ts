@@ -23,7 +23,7 @@ export const icalGenerator =
       uid: event.dateString + '@movienite.club',
       start: event.startTime.toJSDate().getTime(),
       duration: { minutes: event.totalLength },
-      title: 'Movie Nights: ' + event.theme,
+      title: 'Movie Nites: ' + event.theme,
       description: description(event),
       location: '5445 N Kenmore Ave Apt 1S, Chicago, IL 60640',
       url: 'https://movienite.club/',

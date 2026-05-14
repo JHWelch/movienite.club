@@ -65,7 +65,7 @@ const submit = async () => {
 <template>
   <div class="flex flex-col items-center w-full min-h-[70vh] px-5 py-10 sm:py-10 sm:pb-16">
     <h1 class="mt-1 text-3xl leading-10 text-center">
-      Suggest a Movie Night&nbsp;Theme!
+      Suggest a Movie Nite&nbsp;Theme!
     </h1>
 
     <form

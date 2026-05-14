@@ -9,7 +9,7 @@ METHOD:PUBLISH
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:2021-09-13@movienite.club
-SUMMARY:Movie Nights: theme
+SUMMARY:Movie Nites: theme
 DTSTAMP:20210101T000000Z
 DTSTART:20210913T173000Z
 DESCRIPTION:Come one\\, come all (okay maybe not all) to the Welch-Cowell/Co
@@ -23,11 +23,11 @@ ORGANIZER;CN="Rachel & Jordan":MAILTO:fam@wowellworld.com
 X-MICROSOFT-CDO-BUSYSTATUS:BUSY
 X-ALT-DESC;FMTTYPE=text/html:<p><html><body>   <p>Come one, come all (okay 
 	maybe not all) to the Welch-Cowell/Cowell-Welch/Wowell household for a rec
-	urring thursday Movie Night!</p>    <p>This week\\'s theme is <b>theme</b>.
-	</p>    <ul>            <li>         <b>6:00 PM</b>         -         <i>L
-	abyrinth</i>         (1986)       </li>            <li>         <b>8:00 PM
-	</b>         -         <i>The NeverEnding Story</i>         (1984)       <
-	/li>        </ul> </body></html> </p>
+	urring thursday Movie Nite!</p>    <p>This week\\'s theme is <b>theme</b>.<
+	/p>    <ul>            <li>         <b>6:00 PM</b>         -         <i>La
+	byrinth</i>         (1986)       </li>            <li>         <b>8:00 PM<
+	/b>         -         <i>The NeverEnding Story</i>         (1984)       </
+	li>        </ul> </body></html> </p>
 DURATION:PT240M
 END:VEVENT
 END:VCALENDAR

@@ -25,7 +25,7 @@ export const icalGenerator =
       duration: { minutes: event.totalLength },
       title: 'Movie Nights: ' + event.theme,
       description: description(event),
-      location: '2111 W Argyle St. Chicago, IL 60625',
+      location: '5445 N Kenmore Ave Apt 1S, Chicago, IL 60640',
       url: 'https://movienite.club/',
       status: 'CONFIRMED',
       busyStatus: 'BUSY',

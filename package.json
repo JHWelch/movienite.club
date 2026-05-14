@@ -19,6 +19,7 @@
     "clean": "rm -rf dist",
     "start": "NODE_ENV=production tsx src/server/main.ts",
     "test": "vitest",
+    "test:snapshots": "vitest -u",
     "types": "vue-tsc -p tsconfig.build.json --noEmit",
     "coverage": "vitest run --coverage"
   },

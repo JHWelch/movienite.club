@@ -21,8 +21,9 @@ defineProps<{
       :class="{
         'font-bold': part.annotations.bold,
         'italic': part.annotations.italic,
-        'underline': part.annotations.underline,
+        'underline': part.annotations.underline || part.href,
         'line-through': part.annotations.strikethrough,
+        'decoration-dotted': part.href,
       }"
     >
       {{ part.text.content }}

@@ -71,6 +71,8 @@ describe('Styled theme', () => {
     expect(component.element.children[1].innerHTML).toBe('With a link')
     expect(component.element.children[1].getAttribute('href')).toBe('https://example.com')
     expect(component.element.children[1].tagName).toBe('A')
+    expect(component.element.children[1].classList).toContain('underline')
+    expect(component.element.children[1].classList).toContain('decoration-dotted')
   })
 })
 

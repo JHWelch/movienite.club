@@ -13,18 +13,20 @@ defineProps<{
     class="text-3xl font-semibold"
     data-testid="theme"
   >
-    <span
-      v-for="(theme, index) in event.styledTheme"
+    <component
+      :is="part.href ? 'a' : 'span'"
+      v-for="(part, index) in event.styledTheme"
       :key="index"
+      :href="part.href"
       :class="{
-        'font-bold': theme.annotations.bold,
-        'italic': theme.annotations.italic,
-        'underline': theme.annotations.underline,
-        'line-through': theme.annotations.strikethrough,
+        'font-bold': part.annotations.bold,
+        'italic': part.annotations.italic,
+        'underline': part.annotations.underline,
+        'line-through': part.annotations.strikethrough,
       }"
     >
-      {{ theme.text.content }}
-    </span>
+      {{ part.text.content }}
+    </component>
   </span>
 
   <span

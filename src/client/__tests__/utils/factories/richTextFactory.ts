@@ -62,4 +62,11 @@ export default class RichTextFactory extends Factory<RichText> {
 
     return this
   }
+
+  public link (url: string): RichTextFactory {
+    this.state.text.link = { url }
+    this.state.href = url
+
+    return this
+  }
 }

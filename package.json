@@ -31,17 +31,17 @@
   "license": "MIT",
   "dependencies": {
     "@jhwelch/made-with": "^0.0.3",
-    "@notionhq/client": "^5.21.0",
+    "@notionhq/client": "^5.22.0",
     "body-parser": "^2.2.2",
     "dotenv": "^17.4.2",
-    "ejs": "^5.0.2",
+    "ejs": "^6.0.1",
     "express": "^5.2.1",
-    "firebase": "^12.13.0",
+    "firebase": "^12.14.0",
     "firebase-admin": "^13.10.0",
     "ics": "^3.12.0",
     "luxon": "^3.7.2",
     "path": "^0.12.7",
-    "tsx": "^4.21.0",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "url": "^0.11.4",
     "vite-express": "^0.22.1",
@@ -82,6 +82,6 @@
     "vue-tsc": "^3.2.9"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.60.3"
+    "@rollup/rollup-linux-x64-gnu": "^4.61.0"
   }
 }

@@ -11,13 +11,11 @@ dotenv.config()
 
 const config = new Config()
 
-const app = new Application(
+new Application(
   config,
   setupExpress(),
   new DiscordAdapter(config),
   new FirestoreAdapter(config),
   new NotionAdapter(config),
   new TmdbAdapter(config),
-)
-
-app.listen()
+).listen()

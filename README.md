@@ -18,35 +18,35 @@ Update `.env` to include secrets.
 To build assets for development and serve on port `PORT`.
 
 ```sh
-pnpm run dev
+npm run dev
 ```
 
 This will create a local mock Firebase environment. To store local data after syncing
 
 ```sh
-pnpm run firebase:export
+npm run firebase:export
 ```
 
 ### Testing
 
 ```sh
-pnpm test
+npm test
 ```
 
 ### Linting & Fixing
 
 ```sh
-pnpm run lint
+npm run lint
 ```
 
 ```sh
-pnpm run fix
+npm run fix
 ```
 
 ### TypeScript Static Analysis
 
 ```sh
-pnpm run types
+npm run types
 ```
 
 ### Repository Structure
@@ -60,7 +60,7 @@ This repository is split into two applications
 
 This app is deployed to Google App Engine. It will automatically deploy on all merges to `main`. This is the preferred method of deployment.
 
-App engine will build the application with `pnpm run build` and serve the application with `pnpm run start`.
+App engine will build the application with `npm run build` and serve the application with `npm run start`.
 
 Manual deployments can be performed with the built in script.
 

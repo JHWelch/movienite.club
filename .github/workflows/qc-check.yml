@@ -24,20 +24,17 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v7
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v6
-
     - name: Install Node.js
       uses: actions/setup-node@v6
       with:
         node-version-file: .nvmrc
-        cache: pnpm
+        cache: npm
 
     - name: Install Dependencies
-      run: pnpm install
+      run: npm ci
 
     - name: Run Lint
-      run: pnpm run lint
+      run: npm lint
 
   test:
     name: Test
@@ -47,20 +44,17 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v7
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v6
-
     - name: Install Node.js
       uses: actions/setup-node@v6
       with:
         node-version-file: .nvmrc
-        cache: pnpm
+        cache: npm
 
     - name: Install Dependencies
-      run: pnpm install
+      run: npm ci
 
     - name: Run Tests
-      run: pnpm test
+      run: npm test
 
   types:
     name: Static Types
@@ -70,17 +64,14 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v7
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v6
-
     - name: Install Node.js
       uses: actions/setup-node@v6
       with:
         node-version-file: .nvmrc
-        cache: pnpm
+        cache: npm
 
     - name: Install Dependencies
-      run: pnpm install
+      run: npm ci
 
     - name: Test Types
-      run: pnpm run types
+      run: npm run types

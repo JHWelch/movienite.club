@@ -1,5 +1,6 @@
 import Config from '@server/config/config'
 import { Event } from '@server/models/event'
+import { Movie } from '@server/models/movie'
 
 export default class DiscordAdapter {
   private config: Config
@@ -12,7 +13,7 @@ export default class DiscordAdapter {
     const payload = {
       content: [
         `# ${event.theme}`,
-        ...event.movies.map((movie) => ` - **${movie.time}** *${movie.title}*`),
+        ...event.movies.map(this._movieListItem),
       ].join('\n'),
       embeds : event.movies.map((movie) => ({
         title: `*${movie.title}* (${movie.year})`,
@@ -29,6 +30,16 @@ export default class DiscordAdapter {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
+  }
+
+  _movieListItem = (movie: Movie): string => {
+    const { showingUrl, theaterName, time, title } = movie
+
+    if (theaterName && showingUrl) {
+      return ` - **${time}** *${title}* - [${theaterName}](${showingUrl})`
+    }
+
+    return ` - **${time}** *${title}*`
   }
 
 }

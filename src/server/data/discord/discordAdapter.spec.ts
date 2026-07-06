@@ -16,7 +16,7 @@ describe('eventReminder', () => {
     const fetchMock = mockFetch()
     const event = new EventFactory()
       .withMovies([
-        new MovieFactory().make({
+        new MovieFactory().noFields().make({
           title: 'Get Over It',
           year: 2001,
           length: 87,
@@ -25,7 +25,7 @@ describe('eventReminder', () => {
           posterPath: '/hS1jjzTe4P8GMWGnvca7HIndPEX.jpg',
           time: '6:00PM',
         }),
-        new MovieFactory().make({
+        new MovieFactory().noFields().make({
           title: 'My Own Private Idaho',
           year: 1991,
           length: 104,
@@ -63,6 +63,35 @@ describe('eventReminder', () => {
           },
         ],
       }))
+
+      return Promise.resolve(new Response(null, { status: 204 }))
+    })
+
+    await discordAdapter.eventReminder(event)
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('will link to tickets for fieldtrips', async () => {
+    const fetchMock = mockFetch()
+    const event = new EventFactory()
+      .withMovies([
+        new MovieFactory().make({
+          title: 'Fieldtrip Title',
+          time: '9:45PM',
+          theaterName: 'Fieldtrip Theater',
+          showingUrl: 'https://fieldtrip.com/tickets',
+        }),
+      ])
+      .make({
+        theme: 'Field Trip Week',
+      })
+    fetchMock.mockImplementationOnce((url, options) => {
+      expect(url).toBe('https://DISCORD_WEBHOOK')
+      expect(options?.method).toBe('POST')
+      expect(options?.headers).toEqual({ 'Content-Type': 'application/json' })
+      expect(JSON.parse(options?.body?.toString() ?? '').content)
+        .toBe('# Field Trip Week\n - **9:45PM** *Fieldtrip Title* - [Fieldtrip Theater](https://fieldtrip.com/tickets)')
 
       return Promise.resolve(new Response(null, { status: 204 }))
     })

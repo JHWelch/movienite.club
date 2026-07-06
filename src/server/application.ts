@@ -7,18 +7,20 @@ import createAppRouter from '@server/routers/appRouter'
 import Config from '@server/config/config'
 import cronMiddleware from '@server/middleware/cronMiddleware'
 import passwordMiddleware from '@server/middleware/passwordMiddleware'
+import DiscordAdapter from '@server/data/discord/discordAdapter'
 
 export default class Application {
   constructor (
     private config: Config,
     private express: Express,
+    discord: DiscordAdapter,
     firestore: FirestoreAdapter,
     notion: NotionAdapter,
     tmdb: TmdbAdapter,
   ) {
     express.use('/cron', cronMiddleware)
     express.use('/api/cache', passwordMiddleware(config))
-    express.use(createAppRouter(config, firestore, notion, tmdb))
+    express.use(createAppRouter(config, discord, firestore, notion, tmdb))
   }
 
   listen (): void {

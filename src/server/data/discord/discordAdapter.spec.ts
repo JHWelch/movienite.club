@@ -13,6 +13,7 @@ beforeEach(() => {
 
 describe('eventReminder', () => {
   it('calls the discord webhook with the correct payload', async () => {
+    const fetchMock = mockFetch()
     const event = new EventFactory()
       .withMovies([
         new MovieFactory().make({
@@ -37,7 +38,7 @@ describe('eventReminder', () => {
       .make({
         theme: 'AP English Lit',
       })
-    mockFetch().mockImplementationOnce((url, options) => {
+    fetchMock.mockImplementationOnce((url, options) => {
       expect(url).toBe('https://DISCORD_WEBHOOK')
       expect(options?.method).toBe('POST')
       expect(options?.headers).toEqual({ 'Content-Type': 'application/json' })
@@ -67,5 +68,7 @@ describe('eventReminder', () => {
     })
 
     await discordAdapter.eventReminder(event)
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
   })
 })

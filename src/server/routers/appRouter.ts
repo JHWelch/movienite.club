@@ -15,9 +15,11 @@ import SubscriptionController from '@server/controllers/subscriptionController'
 import { CronController } from '@server/controllers/cronController'
 import EventEventController from '@server/controllers/eventEventController'
 import MovieController from '@server/controllers/movieController'
+import DiscordAdapter from '@server/data/discord/discordAdapter'
 
 export default function createAppRouter (
   config: Config,
+  discord: DiscordAdapter,
   firestore: FirestoreAdapter,
   notion: NotionAdapter,
   tmdb: TmdbAdapter,
@@ -25,7 +27,7 @@ export default function createAppRouter (
   const cacheEventsController = new CacheEventsController(firestore, notion, tmdb)
   const cacheEmailTemplatesController = new CacheEmailTemplatesController(firestore)
   const calendarController = new CalendarController(config)
-  const cronController = new CronController(config, firestore)
+  const cronController = new CronController(config, discord, firestore)
   const movieController = new MovieController(notion, tmdb)
   const rsvpController = new RsvpController(firestore)
   const subscriptionController = new SubscriptionController(firestore)

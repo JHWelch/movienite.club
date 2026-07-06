@@ -77,7 +77,7 @@ export class FirebaseMock {
     }))
   }
 
-  static mockGetUsers (users: FirebaseUser[]) {
+  static mockGetUsers (users: FirebaseUser[] = []) {
     getDocs.mockImplementation(() => ({
       docs: users.map((user) => ({
         id: user.id,

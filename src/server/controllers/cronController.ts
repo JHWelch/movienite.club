@@ -1,11 +1,14 @@
 import { type Request, type Response } from 'express'
 import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
+import DiscordAdapter from '@server/data/discord/discordAdapter'
 import Config from '@server/config/config'
 import { tomorrow } from '@server/data/dateUtils'
+import { Event } from '@server/models/event'
 
 class CronController {
   constructor (
     protected config: Config,
+    protected discord: DiscordAdapter,
     protected firestore: FirestoreAdapter,
   ) {}
 
@@ -18,7 +21,20 @@ class CronController {
       return
     }
 
+    await Promise.all([
+      this._emailReminders(event),
+      this.discord.eventReminder(event),
+    ])
+
+    res.status(200).send('ok')
+  }
+
+  _emailReminders = async (event: Event) => {
     const users = await this.firestore.getUsersWithReminders()
+
+    if (users.length === 0) {
+      return
+    }
 
     const movies = event.movies.map((movie) => ({
       title: movie.title,
@@ -37,8 +53,6 @@ class CronController {
         unsubscribeUrl: this.config.appUrl + user.unsubscribeUrl(),
       },
     })))
-
-    res.status(200).send('ok')
   }
 }
 

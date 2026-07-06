@@ -135,6 +135,10 @@ export class Event {
     return this.date.toISODate() ?? ''
   }
 
+  get monthDayDisplayDate (): string {
+    return this.date.toFormat('M/d')
+  }
+
   get isPast (): boolean {
     return this.date < DateTime.now()
   }

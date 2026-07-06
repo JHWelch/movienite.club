@@ -4,6 +4,7 @@ import DiscordAdapter from '@server/data/discord/discordAdapter'
 import { mockConfig } from '@server/__tests__/support/mockConfig'
 import EventFactory from '@server/__tests__/support/factories/eventFactory'
 import MovieFactory from '@server/__tests__/support/factories/movieFactory'
+import { DateTime } from 'luxon'
 
 let discordAdapter: DiscordAdapter
 
@@ -37,13 +38,14 @@ describe('eventReminder', () => {
       ])
       .make({
         theme: 'AP English Lit',
+        date: DateTime.fromISO('2024-06-01T20:00:00Z'),
       })
     fetchMock.mockImplementationOnce((url, options) => {
       expect(url).toBe('https://DISCORD_WEBHOOK')
       expect(options?.method).toBe('POST')
       expect(options?.headers).toEqual({ 'Content-Type': 'application/json' })
       expect(options?.body).toBe(JSON.stringify({
-        content: '# AP English Lit\n - **6:00PM** *Get Over It*\n - **8:00PM** *My Own Private Idaho*',
+        content: '# Movie Nite Tomorrow (6/1)\n## AP English Lit\n - **6:00PM** *Get Over It*\n - **8:00PM** *My Own Private Idaho*',
         embeds: [
           {
             title: '*Get Over It* (2001)',
@@ -85,13 +87,14 @@ describe('eventReminder', () => {
       ])
       .make({
         theme: 'Field Trip Week',
+        date: DateTime.fromISO('2024-06-01T20:00:00Z'),
       })
     fetchMock.mockImplementationOnce((url, options) => {
       expect(url).toBe('https://DISCORD_WEBHOOK')
       expect(options?.method).toBe('POST')
       expect(options?.headers).toEqual({ 'Content-Type': 'application/json' })
       expect(JSON.parse(options?.body?.toString() ?? '').content)
-        .toBe('# Field Trip Week\n - **9:45PM** *Fieldtrip Title* - [Fieldtrip Theater](https://fieldtrip.com/tickets)')
+        .toBe('# Movie Nite Tomorrow (6/1)\n## Field Trip Week\n - **9:45PM** *Fieldtrip Title* - [Fieldtrip Theater](https://fieldtrip.com/tickets)')
 
       return Promise.resolve(new Response(null, { status: 204 }))
     })

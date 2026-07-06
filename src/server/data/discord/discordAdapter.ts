@@ -12,7 +12,8 @@ export default class DiscordAdapter {
   eventReminder = async (event: Event): Promise<void> => {
     const payload = {
       content: [
-        `# ${event.theme}`,
+        `# Movie Nite Tomorrow (${event.monthDayDisplayDate})`,
+        `## ${event.theme}`,
         ...event.movies.map(this._movieListItem),
       ].join('\n'),
       embeds : event.movies.map((movie) => ({

@@ -3,6 +3,7 @@ export default class Config {
   apiPassword: string
   appUrl: string
   calendarUrl: string
+  discordWebhook: string
   googleCloudProject: string
   nodeEnv: string
   notionMovieDatabaseId: string
@@ -16,6 +17,7 @@ export default class Config {
     this.apiPassword = requiredVariable('API_PASSWORD')
     this.appUrl = requiredVariable('APP_URL')
     this.calendarUrl = requiredVariable('CALENDAR_URL')
+    this.discordWebhook = requiredVariable('DISCORD_WEBHOOK')
     this.googleCloudProject = requiredVariable('GOOGLE_CLOUD_PROJECT')
     this.notionMovieDatabaseId = requiredVariable('NOTION_MOVIE_DATA_SOURCE_ID')
     this.notionEventDatabaseId = requiredVariable('NOTION_EVENT_DATA_SOURCE_ID')

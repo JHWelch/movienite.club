@@ -11,11 +11,16 @@ import Config from '@server/config/config'
 import { getDocs } from 'firebase/firestore'
 import { DateTime } from 'luxon'
 import { TZ } from '@server/config/tz'
+import { mockFetch } from '@server/__tests__/support/fetchMock'
+import DiscordAdapter from '@server/data/discord/discordAdapter'
 
 const { res, mockClear } = getMockRes()
 
-let firestore: FirestoreAdapter
 let config: Config
+let discord: DiscordAdapter
+let firestore: FirestoreAdapter
+
+let cronController: CronController
 
 vi.mock('firebase-admin/app')
 vi.mock('firebase/app')
@@ -24,8 +29,11 @@ vi.mock('firebase/firestore')
 beforeEach(() => {
   mockClear()
   config = mockConfig()
+  discord = new DiscordAdapter(config)
   firestore = new FirestoreAdapter(config)
   vi.clearAllMocks()
+
+  cronController = new CronController(config, discord, firestore)
 })
 
 describe('reminders', () => {
@@ -65,6 +73,23 @@ describe('reminders', () => {
       })
     })
 
+    it('sends a webhook to discord', async () => {
+      FirebaseMock.mockGetUsers()
+      const fetchMock = mockFetch()
+      fetchMock.mockImplementationOnce((url, options) => {
+        expect(url).toBe('https://DISCORD_WEBHOOK')
+        expect(options?.body).toMatchSnapshot()
+
+        return Promise.resolve(new Response(null, { status: 204 }))
+      })
+
+      await cronController.reminders(getMockReq(), res)
+
+      expect(res.status).toHaveBeenCalledWith(200)
+      expect(res.send).toHaveBeenCalledWith('ok')
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+    })
+
     describe('there are users subscribed', () => {
       beforeEach(() => {
         FirebaseMock.mockGetUsers([
@@ -81,7 +106,7 @@ describe('reminders', () => {
       })
 
       it('should send a reminder to those users', async () => {
-        await new CronController(config, firestore).reminders(getMockReq(), res)
+        await cronController.reminders(getMockReq(), res)
 
         expect(transaction.set).toHaveBeenCalledWith(
           FirebaseMock.mockDoc('mail', expect.anything()),
@@ -147,7 +172,7 @@ describe('reminders', () => {
     })
 
     it('should return 200', async () => {
-      await new CronController(config, firestore).reminders(getMockReq(), res)
+      await cronController.reminders(getMockReq(), res)
 
       expect(res.status).toHaveBeenCalledWith(200)
       expect(res.send).toHaveBeenCalledWith('ok')
@@ -166,7 +191,7 @@ describe('reminders', () => {
     })
 
     it('should return 200', async () => {
-      await new CronController(config, firestore).reminders(getMockReq(), res)
+      await cronController.reminders(getMockReq(), res)
 
       expect(res.status).toHaveBeenCalledWith(200)
       expect(res.send).toHaveBeenCalledWith('ok')
@@ -187,7 +212,7 @@ describe('reminders', () => {
     })
 
     it('should return 200', async () => {
-      await new CronController(config, firestore).reminders(getMockReq(), res)
+      await cronController.reminders(getMockReq(), res)
 
       expect(res.status).toHaveBeenCalledWith(200)
       expect(res.send).toHaveBeenCalledWith('ok')

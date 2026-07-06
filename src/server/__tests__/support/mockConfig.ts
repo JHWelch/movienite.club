@@ -9,6 +9,7 @@ export function mockConfig ({
     API_PASSWORD: 'API_PASSWORD',
     APP_URL: 'http://APP_URL.example.com',
     CALENDAR_URL: 'https://CALENDAR_URL',
+    DISCORD_WEBHOOK: 'https://DISCORD_WEBHOOK',
     GOOGLE_CLOUD_PROJECT: googleCloudProject,
     NODE_ENV: nodeEnv,
     NOTION_MOVIE_DATA_SOURCE_ID: 'NOTION_MOVIE_DATA_SOURCE_ID',

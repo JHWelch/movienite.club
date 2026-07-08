@@ -17,18 +17,26 @@ describe('submit', () => {
   beforeEach(async () => {
     fetchMock.mockGlobal().route('/api/admin/discord', {})
 
-    wrapper = mount(TestWebhook)
+    wrapper = mount(TestWebhook, {
+      props: {
+        password: 'admin-password',
+      },
+    })
   })
 
-  it('submits a webhook date', async () => {
-    wrapper.vm.date = '2023-01-01'
+  it('submits a webhook eventId', async () => {
+    wrapper.vm.eventId = '2023-01-01'
 
     wrapper.find('form').trigger('submit')
     await flushPromises()
 
     expect({ fetchMock }).toHavePosted('/api/admin/discord', {
       body: {
-        date: '2023-01-01',
+        eventId: '2023-01-01',
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'admin-password',
       },
     })
   })

@@ -119,7 +119,7 @@ const displayNewLastUpdated = computed(
 
             <AddMovie />
 
-            <TestWebhook />
+            <TestWebhook :password="password" />
           </div>
 
           <div

@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { ComponentPublicInstance } from 'vue'
 import AddMovie from '@components/admin/AddMovie.vue'
 import fetchMock from '@fetch-mock/vitest'
-import TestWebhook from './TestWebhook.vue'
+import TestWebhook from '@components/admin/TestWebhook.vue'
 
 let wrapper: VueWrapper<ComponentPublicInstance<typeof AddMovie>>
 

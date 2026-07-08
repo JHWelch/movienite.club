@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`discordWebhook > sends a webhook to discord 1`] = `"{"content":"# Movie Nite Tomorrow (1/1)\\n## theme1\\n - **6:00 PM** *movie1*\\n - **8:00 PM** *movie2*","embeds":[{"title":"*movie1* (2021)","description":"director1 - 1h 40m","url":"https://example.com","image":{"url":"https://image.tmdb.org/t/p/w1280/poster1.png"}},{"title":"*movie2* (1999)","description":"director2 - 3h 20m","url":"https://example.com","image":{"url":"https://image.tmdb.org/t/p/w1280/poster2.jpg"}}]}"`;

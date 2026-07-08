@@ -16,6 +16,7 @@ import { CronController } from '@server/controllers/cronController'
 import EventEventController from '@server/controllers/eventEventController'
 import MovieController from '@server/controllers/movieController'
 import DiscordAdapter from '@server/data/discord/discordAdapter'
+import AdminTestController from '@server/controllers/adminTestController'
 
 export default function createAppRouter (
   config: Config,
@@ -34,6 +35,7 @@ export default function createAppRouter (
   const suggestionController = new SuggestionController(notion, tmdb)
   const eventController = new EventController(firestore)
   const eventEventController = new EventEventController(firestore)
+  const adminTestController = new AdminTestController(discord, firestore)
 
   const router = Router()
 
@@ -54,6 +56,8 @@ export default function createAppRouter (
   router.get('/unsubscribe', subscriptionController.destroy)
   router.get('/cron/reminders', cronController.reminders)
   router.get('/events/:eventId/event', eventEventController.show)
+
+  router.post('/api/admin/discord', adminTestController.discordWebhook)
 
   return router
 }

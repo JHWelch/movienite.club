@@ -16,6 +16,7 @@ export default class Application {
   ) {
     express.use('/cron', cronMiddleware)
     express.use('/api/cache', passwordMiddleware(config))
+    express.use('/api/admin', passwordMiddleware(config))
     express.use(createAppRouter(
       config,
       new DiscordAdapter(config),

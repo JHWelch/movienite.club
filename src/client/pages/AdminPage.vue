@@ -7,6 +7,7 @@ import { ArrowPathIcon, LockClosedIcon, LockOpenIcon } from '@heroicons/vue/24/s
 import { CacheEventsOutput } from '@shared/dtos'
 import { computed, ref } from 'vue'
 import Button from '@client/components/buttons/Button.vue'
+import TestWebhook from '@client/components/admin/TestWebhook.vue'
 
 const cacheEventsLoading = ref<boolean>(false)
 const cacheEventsOutput = ref<CacheEventsOutput | null>(null)
@@ -117,6 +118,8 @@ const displayNewLastUpdated = computed(
             </div>
 
             <AddMovie />
+
+            <TestWebhook />
           </div>
 
           <div

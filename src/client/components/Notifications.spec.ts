@@ -22,78 +22,49 @@ describe('default', () => {
   })
 })
 
-describe('show message with default type', () => {
+describe('open', () => {
   beforeEach(async () => {
     wrapper = mount(Notifications)
+  })
+
+  it('can show a default info notifications', async () => {
     notifications.open('Hello World')
     await nextTick()
+
     notification = wrapper.byTestId('notifications')
-  })
-
-  it('should show notifications', () => {
     expect(notification.exists()).toBe(true)
-  })
-
-  it('should display message', () => {
     expect(notification.text()).toBe('Hello World')
-  })
-
-  it('should display message with info style', () => {
     expect(notification.classes()).toContain('bg-blue-500')
-  })
-
-  it('should display message with info icon', () => {
     expect(wrapper.findComponent(InformationCircleIcon).exists()).toBe(true)
   })
-})
 
-describe('show message with success type', () => {
-  beforeEach(async () => {
+  it('can show success notifications', async () => {
     wrapper = mount(Notifications)
     notifications.open('Hello World', 'success')
     await nextTick()
+
     notification = wrapper.byTestId('notifications')
-  })
-
-  it('should display message with correct style', () => {
     expect(notification.classes()).toContain('bg-green-500')
-  })
-
-  it('should display message with correct icon', () => {
     expect(wrapper.findComponent(CheckCircleIcon).exists()).toBe(true)
   })
-})
 
-describe('show message with warning type', () => {
-  beforeEach(async () => {
+  it('can show warning notifications', async () => {
     wrapper = mount(Notifications)
     notifications.open('Hello World', 'warning')
     await nextTick()
+
     notification = wrapper.byTestId('notifications')
-  })
-
-  it('should display message with correct style', () => {
     expect(notification.classes()).toContain('bg-yellow-500')
-  })
-
-  it('should display message with correct icon', () => {
     expect(wrapper.findComponent(ExclamationTriangleIcon).exists()).toBe(true)
   })
-})
 
-describe('show message with error type', () => {
-  beforeEach(async () => {
+  it('can show error notifications', async () => {
     wrapper = mount(Notifications)
     notifications.open('Hello World', 'error')
     await nextTick()
+
     notification = wrapper.byTestId('notifications')
-  })
-
-  it('should display message with correct style', () => {
     expect(notification.classes()).toContain('bg-red-500')
-  })
-
-  it('should display message with correct icon', () => {
     expect(wrapper.findComponent(XCircleIcon).exists()).toBe(true)
   })
 })

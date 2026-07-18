@@ -43,7 +43,7 @@ describe('env missing NOTION_TOKEN', () => {
   })
 
   it('throws an error', () => {
-    expect(() => new Config()).toThrowError('NOTION_TOKEN is missing')
+    expect(() => new Config()).toThrow('NOTION_TOKEN is missing')
   })
 })
 
@@ -54,7 +54,7 @@ describe('env missing NOTION_MOVIE_DATA_SOURCE_ID', () => {
 
   it('throws an error', () => {
     expect(() => new Config())
-      .toThrowError('NOTION_MOVIE_DATA_SOURCE_ID is missing')
+      .toThrow('NOTION_MOVIE_DATA_SOURCE_ID is missing')
   })
 })
 
@@ -65,7 +65,7 @@ describe('env missing NOTION_EVENT_DATA_SOURCE_ID', () => {
 
   it('throws an error', () => {
     expect(() => new Config())
-      .toThrowError('NOTION_EVENT_DATA_SOURCE_ID is missing')
+      .toThrow('NOTION_EVENT_DATA_SOURCE_ID is missing')
   })
 })
 
@@ -85,7 +85,7 @@ describe('env missing GOOGLE_CLOUD_PROJECT', () => {
   })
 
   it('throws an error', () => {
-    expect(() => new Config()).toThrowError('GOOGLE_CLOUD_PROJECT is missing')
+    expect(() => new Config()).toThrow('GOOGLE_CLOUD_PROJECT is missing')
   })
 })
 
@@ -95,7 +95,7 @@ describe('env missing ADMIN_EMAIL', () => {
   })
 
   it('throws an error', () => {
-    expect(() => new Config()).toThrowError('ADMIN_EMAIL is missing')
+    expect(() => new Config()).toThrow('ADMIN_EMAIL is missing')
   })
 })
 
@@ -105,7 +105,7 @@ describe('env missing APP_URL', () => {
   })
 
   it('throws an error', () => {
-    expect(() => new Config()).toThrowError('APP_URL is missing')
+    expect(() => new Config()).toThrow('APP_URL is missing')
   })
 })
 
@@ -115,7 +115,7 @@ describe('env missing API_PASSWORD', () => {
   })
 
   it('throws an error', () => {
-    expect(() => new Config()).toThrowError('API_PASSWORD is missing')
+    expect(() => new Config()).toThrow('API_PASSWORD is missing')
   })
 })
 
@@ -125,7 +125,7 @@ describe('env missing TMDB_READ_KEY', () => {
   })
 
   it('throws an error', () => {
-    expect(() => new Config()).toThrowError('TMDB_READ_KEY is missing')
+    expect(() => new Config()).toThrow('TMDB_READ_KEY is missing')
   })
 })
 
@@ -135,7 +135,7 @@ describe('env missing CALENDAR_URL', () => {
   })
 
   it('throws an error', () => {
-    expect(() => new Config()).toThrowError('CALENDAR_URL is missing')
+    expect(() => new Config()).toThrow('CALENDAR_URL is missing')
   })
 })
 

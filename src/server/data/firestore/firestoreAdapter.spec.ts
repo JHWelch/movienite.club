@@ -28,15 +28,16 @@ import { DateTime } from 'luxon'
 import { TZ } from '@server/config/tz'
 import MockDate from 'mockdate'
 
+vi.mock('firebase-admin/app')
+vi.mock('firebase/app')
+vi.mock('firebase/firestore')
+
 let firestore: FirestoreAdapter
 let now: DateTime
 
 beforeAll(() => {
   MockDate.set('2021-01-01T00:00:00.000Z')
   now = DateTime.now()
-  vi.mock('firebase-admin/app')
-  vi.mock('firebase/app')
-  vi.mock('firebase/firestore')
 })
 
 beforeEach(() => {

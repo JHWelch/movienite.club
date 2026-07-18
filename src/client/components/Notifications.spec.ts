@@ -148,3 +148,67 @@ describe('Message called via query param with type', () => {
     expect(notification.classes()).toContain('bg-green-500')
   })
 })
+
+describe('info', () => {
+  beforeEach(async () => {
+    wrapper = mount(Notifications)
+  })
+
+  it('should display info message', async () => {
+    notifications.info('Hello World')
+    await nextTick()
+    notification = wrapper.byTestId('notifications')
+
+    expect(notification.exists()).toBe(true)
+    expect(notification.text()).toBe('Hello World')
+    expect(notification.classes()).toContain('bg-blue-500')
+  })
+})
+
+describe('success', () => {
+  beforeEach(async () => {
+    wrapper = mount(Notifications)
+  })
+
+  it('should display success message', async () => {
+    notifications.success('Hello World')
+    await nextTick()
+    notification = wrapper.byTestId('notifications')
+
+    expect(notification.exists()).toBe(true)
+    expect(notification.text()).toBe('Hello World')
+    expect(notification.classes()).toContain('bg-green-500')
+  })
+})
+
+describe('warning', () => {
+  beforeEach(async () => {
+    wrapper = mount(Notifications)
+  })
+
+  it('should display warning message', async () => {
+    notifications.warning('Hello World')
+    await nextTick()
+    notification = wrapper.byTestId('notifications')
+
+    expect(notification.exists()).toBe(true)
+    expect(notification.text()).toBe('Hello World')
+    expect(notification.classes()).toContain('bg-yellow-500')
+  })
+})
+
+describe('error', () => {
+  beforeEach(async () => {
+    wrapper = mount(Notifications)
+  })
+
+  it('should display error message', async () => {
+    notifications.error('Hello World')
+    await nextTick()
+    notification = wrapper.byTestId('notifications')
+
+    expect(notification.exists()).toBe(true)
+    expect(notification.text()).toBe('Hello World')
+    expect(notification.classes()).toContain('bg-red-500')
+  })
+})

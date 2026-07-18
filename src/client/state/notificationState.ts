@@ -12,6 +12,10 @@ export type NotificationState = {
     timeout?: number,
   ) => void
   close: () => void
+  info: (message: string) => void
+  success: (message: string) => void
+  warning: (message: string) => void
+  error: (message: string) => void
 }
 
 export const notifications: NotificationState = reactive<NotificationState>({
@@ -37,4 +41,8 @@ export const notifications: NotificationState = reactive<NotificationState>({
     notifications.message = undefined
     notifications.type = undefined
   },
+  info: (message: string) => notifications.open(message, 'info'),
+  success: (message: string) => notifications.open(message, 'success'),
+  warning: (message: string) => notifications.open(message, 'warning'),
+  error: (message: string) => notifications.open(message, 'error'),
 })

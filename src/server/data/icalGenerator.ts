@@ -4,7 +4,7 @@ import * as ics from 'ics'
 import ejs from 'ejs'
 import directoryPath from '@server/helpers/directoryPath'
 
-const description = (event: Event): string => 'Come one, come all (okay maybe not all) to the Welch-Cowell/Cowell-Welch/Wowell household for a recurring thursday Movie Night!'
+const description = (event: Event): string => 'Come one, come all (okay maybe not all) to the Welch-Cowell/Cowell-Welch/Wowell household for a recurring thursday Movie Nite!'
   + '\n\n'
   + 'This week\'s theme is ' + event.theme + '.'
   + '\n\n'

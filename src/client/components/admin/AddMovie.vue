@@ -5,6 +5,7 @@ import MovieSearchInput from '@client/components/form/MovieSearchInput.vue'
 import { jsonHeaders } from '@client/data/headers'
 import { ErrorBag } from '@client/types'
 import LoadingIcon from '@components/icons/LoadingIcon.vue'
+import { notifications } from '@client/state/notificationState'
 type AddMovieFormData = MovieSearchInputData & {
   watchWhere: Array<string>
 }
@@ -24,7 +25,7 @@ const handleErrors = (data: ErrorBag) => {
     errors.value = data.errors
   }
   if (data.message) {
-    alert(data.message)
+    notifications.error(data.message)
   }
 }
 const submit = async () => {

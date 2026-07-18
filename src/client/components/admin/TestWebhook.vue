@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { notifications } from '@client/state/notificationState'
 import { ref } from 'vue'
 
 const eventId = ref<string>('')
@@ -21,9 +22,9 @@ const submit = async () => {
 
   if (!response.ok) {
     const data = await response.json()
-    alert(data.message || 'Error testing webhook')
+    notifications.error(data.message || 'Error testing webhook')
   } else {
-    alert('Webhook test sent successfully')
+    notifications.success('Webhook test sent successfully')
   }
 }
 

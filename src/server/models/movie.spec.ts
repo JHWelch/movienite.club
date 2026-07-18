@@ -65,7 +65,7 @@ describe('toNotion', () => {
       const movie = new MovieFactory().state({ notionId: null }).make()
 
       expect(() => movie.toNotion())
-        .toThrowError('Movie does not have notionId')
+        .toThrow('Movie does not have notionId')
     })
   })
 })

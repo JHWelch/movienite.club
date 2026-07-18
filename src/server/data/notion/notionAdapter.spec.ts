@@ -72,7 +72,7 @@ describe('getMovie', () => {
 
     it('should throw an error', async () => {
       await expect(new NotionAdapter(mockConfig()).getMovie('movieId'))
-        .rejects.toThrowError('Page was not successfully retrieved')
+        .rejects.toThrow('Page was not successfully retrieved')
     })
   })
 })
@@ -181,7 +181,7 @@ describe('getEvent', () => {
 
     it('should throw an error', async () => {
       await expect(notion.getEvent('2021-01-01'))
-        .rejects.toThrowError('Page was not successfully retrieved')
+        .rejects.toThrow('Page was not successfully retrieved')
     })
   })
 })

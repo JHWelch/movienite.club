@@ -62,7 +62,7 @@
     "@vitejs/plugin-vue": "^6.0.7",
     "@vitest/coverage-v8": "^4.1.9",
     "@vue/test-utils": "^2.4.11",
-    "concurrently": "^10.0.3",
+    "concurrently": "^10.0.4",
     "eslint": "^10.5.0",
     "firebase-tools": "^15.21.0",
     "globals": "^17.6.0",

@@ -41,8 +41,20 @@ export const notifications: NotificationState = reactive<NotificationState>({
     notifications.message = undefined
     notifications.type = undefined
   },
-  info: (message: string) => notifications.open(message, 'info'),
-  success: (message: string) => notifications.open(message, 'success'),
-  warning: (message: string) => notifications.open(message, 'warning'),
-  error: (message: string) => notifications.open(message, 'error'),
+  info: (
+    message: string,
+    timeout: number = 5000,
+  ) => notifications.flash(message, 'info', timeout),
+  success: (
+    message: string,
+    timeout: number = 5000,
+  ) => notifications.flash(message, 'success', timeout),
+  warning: (
+    message: string,
+    timeout: number = 5000,
+  ) => notifications.flash(message, 'warning', timeout),
+  error: (
+    message: string,
+    timeout: number = 5000,
+  ) => notifications.flash(message, 'error', timeout),
 })

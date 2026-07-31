@@ -11,7 +11,7 @@ export function useErrorHandling (errorMap?: (initial: Errors) => Errors) {
     }
 
     if (data.message) {
-      notifications.flash(data.message, 'error')
+      notifications.error(data.message)
     }
   }
 

@@ -33,21 +33,21 @@
   },
   "dependencies": {
     "@jhwelch/made-with": "^0.0.3",
-    "@notionhq/client": "^5.22.0",
+    "@notionhq/client": "^5.26.0",
     "body-parser": "^2.3.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
-    "firebase": "^12.15.0",
-    "firebase-admin": "^14.1.0",
+    "firebase": "^12.18.0",
+    "firebase-admin": "^14.3.0",
     "ics": "^3.12.0",
     "luxon": "^3.7.2",
     "path": "^0.12.7",
-    "tsx": "^4.22.4",
+    "tsx": "^4.23.12",
     "typescript": "^6.0.3",
     "url": "^0.11.4",
     "vite-express": "^0.22.1",
-    "zod": "^4.4.3"
+    "zod": "^4.5.2"
   },
   "devDependencies": {
     "@fetch-mock/vitest": "^0.2.18",
@@ -84,6 +84,6 @@
     "vue-tsc": "^3.3.5"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.62.2"
+    "@rollup/rollup-linux-x64-gnu": "^4.63.1"
   }
 }

@@ -2,7 +2,7 @@
 import AppFooter from '@components/AppFooter.vue'
 import NavBar from '@components/NavBar.vue'
 import Notifications from '@components/Notifications.vue'
-import DateChangeBanner from './components/DateChangeBanner.vue';
+import DateChangeBanner from '@components/DateChangeBanner.vue'
 </script>
 
 <template>

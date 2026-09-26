@@ -1,13 +1,13 @@
 /** @vitest-environment jsdom */
 
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils'
-import { afterEach, expect, it, vitest } from 'vitest'
+import { afterEach, describe, expect, it, vitest } from 'vitest'
 import fetchMock from '@fetch-mock/vitest'
 import MovieFactory from '@client/__tests__/utils/factories/movieFactory'
 import EventPage from '@pages/EventPage.vue'
 import EventFactory from '@client/__tests__/utils/factories/eventFactory'
 import { setQueryString } from '@client/__tests__/utils/locationHelpers'
-import { render } from '@testing-library/vue'
+import { cleanup, render } from '@testing-library/vue'
 import { screen } from '@testing-library/dom'
 
 let wrapper: VueWrapper
@@ -21,6 +21,7 @@ vitest.mock('vue-router', () => ({
 }))
 
 afterEach(() => {
+  cleanup()
   fetchMock.mockReset()
 })
 
@@ -58,19 +59,39 @@ it('will redirect to 404 if the event is not found', async () => {
   expect(routerPushMock).toHaveBeenCalledWith('/404')
 })
 
-it('will show the RSVP modal if present in query', async () => {
-  setQueryString('?rsvp=2024-01-01')
-  fetchMock.mockGlobal().route('/api/events/2024-01-01', new EventFactory().build({
-    eventId: '2024-01-01',
-  }))
+describe('rsvps', () => {
+  it('will show the RSVP modal if present in query', async () => {
+    setQueryString('?rsvp=2024-01-01')
+    fetchMock.mockGlobal().route('/api/events/2024-01-01', new EventFactory().build({
+      eventId: '2024-01-01',
+    }))
 
-  render(EventPage, {
-    props: {
-      id: '2024-01-01',
-    },
+    render(EventPage, {
+      props: {
+        id: '2024-01-01',
+      },
+    })
+
+    await flushPromises()
+
+    expect(screen.getByText('RSVP to:')).toBeVisible()
   })
 
-  await flushPromises()
+  it('can open RSVP from slug', async () => {
+    setQueryString('?rsvp=slug-name')
+    fetchMock.mockGlobal().route('/api/events/slug-name', new EventFactory().build({
+      eventId: '2024-01-01',
+      slug: 'slug-name',
+    }))
 
-  expect(screen.getByText('RSVP to:')).toBeVisible()
+    render(EventPage, {
+      props: {
+        id: 'slug-name',
+      },
+    })
+
+    await flushPromises()
+
+    expect(screen.getByText('RSVP to:')).toBeVisible()
+  })
 })

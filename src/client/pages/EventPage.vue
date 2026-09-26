@@ -4,7 +4,7 @@ import EventItem from '@client/components/EventItem.vue'
 import LoadingAnimation from '@client/components/LoadingAnimation.vue'
 import RsvpModal from '@client/components/RsvpModal.vue'
 import { rsvpModal } from '@client/state/rsvpModalState'
-import { EventDto } from '@shared/dtos'
+import { EventDto, isEventDto } from '@shared/dtos'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -36,11 +36,12 @@ const reload = () => {
       return response.json()
     })
     .then(data => {
+      if (!data || !isEventDto(data)) { return }
       curEvent.value = data
 
       const rsvpEventId = rsvpModal.getEventId()
-      if (rsvpEventId && rsvpEventId === curEvent.value?.eventId) {
-        rsvpModal.open(curEvent.value)
+      if (rsvpEventId && [data.eventId, data.slug].includes(rsvpEventId) ) {
+        rsvpModal.open(data)
       }
     })
     .catch(() => {

@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 
 import { describe, expect, it } from 'vitest'
-import { rsvpModal } from './rsvpModalState'
+import { rsvpModal } from '@client/state/rsvpModalState'
 import EventFactory from '@client/__tests__/utils/factories/eventFactory'
 import { setQueryString } from '@client/__tests__/utils/locationHelpers'
 

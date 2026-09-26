@@ -2,6 +2,8 @@
 import ErrorBanner from '@client/components/ErrorBanner.vue'
 import EventItem from '@client/components/EventItem.vue'
 import LoadingAnimation from '@client/components/LoadingAnimation.vue'
+import RsvpModal from '@client/components/RsvpModal.vue'
+import { rsvpModal } from '@client/state/rsvpModalState'
 import { EventDto } from '@shared/dtos'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -35,6 +37,11 @@ const reload = () => {
     })
     .then(data => {
       curEvent.value = data
+
+      const rsvpEventId = rsvpModal.getEventId()
+      if (rsvpEventId && rsvpEventId === curEvent.value?.eventId) {
+        rsvpModal.open(curEvent.value)
+      }
     })
     .catch(() => {
       console.error('Error fetching event data')
@@ -59,4 +66,6 @@ reload()
     :event="curEvent"
     :show-event-details="true"
   />
+
+  <RsvpModal />
 </template>

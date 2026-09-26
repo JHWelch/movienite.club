@@ -6,6 +6,9 @@ import fetchMock from '@fetch-mock/vitest'
 import MovieFactory from '@client/__tests__/utils/factories/movieFactory'
 import EventPage from '@pages/EventPage.vue'
 import EventFactory from '@client/__tests__/utils/factories/eventFactory'
+import { setQueryString } from '@client/__tests__/utils/locationHelpers'
+import { render } from '@testing-library/vue'
+import { screen } from '@testing-library/dom'
 
 let wrapper: VueWrapper
 
@@ -53,4 +56,21 @@ it('will redirect to 404 if the event is not found', async () => {
   await flushPromises()
 
   expect(routerPushMock).toHaveBeenCalledWith('/404')
+})
+
+it('will show the RSVP modal if present in query', async () => {
+  setQueryString('?rsvp=2024-01-01')
+  fetchMock.mockGlobal().route('/api/events/2024-01-01', new EventFactory().build({
+    eventId: '2024-01-01',
+  }))
+
+  render(EventPage, {
+    props: {
+      id: '2024-01-01',
+    },
+  })
+
+  await flushPromises()
+
+  expect(screen.getByText('RSVP to:')).toBeVisible()
 })

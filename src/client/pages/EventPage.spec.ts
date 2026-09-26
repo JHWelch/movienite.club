@@ -60,6 +60,21 @@ it('will redirect to 404 if the event is not found', async () => {
 })
 
 describe('rsvps', () => {
+  it('will not show by default', async () => {
+    setQueryString('')
+    fetchMock.mockGlobal().route('/api/events/2024-01-01', new EventFactory().build())
+
+    render(EventPage, {
+      props: {
+        id: '2024-01-01',
+      },
+    })
+
+    await flushPromises()
+
+    expect(screen.getByText('RSVP to:')).not.toBeVisible()
+  })
+
   it('will show the RSVP modal if present in query', async () => {
     setQueryString('?rsvp=2024-01-01')
     fetchMock.mockGlobal().route('/api/events/2024-01-01', new EventFactory().build({

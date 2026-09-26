@@ -40,7 +40,10 @@ const reload = () => {
       curEvent.value = data
 
       const rsvpEventId = rsvpModal.getEventId()
-      if (rsvpEventId && [data.eventId, data.slug].includes(rsvpEventId) ) {
+      if (
+        rsvpEventId !== null &&
+        (rsvpEventId === '' || [data.eventId, data.slug].includes(rsvpEventId))
+      ) {
         rsvpModal.open(data)
       }
     })

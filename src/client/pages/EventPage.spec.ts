@@ -109,4 +109,19 @@ describe('rsvps', () => {
 
     expect(screen.getByText('RSVP to:')).toBeVisible()
   })
+
+  it('will open RSVP if no id is specified', async () => {
+    setQueryString('?rsvp')
+    fetchMock.mockGlobal().route('/api/events/slug-name', new EventFactory().build())
+
+    render(EventPage, {
+      props: {
+        id: 'slug-name',
+      },
+    })
+
+    await flushPromises()
+
+    expect(screen.getByText('RSVP to:')).toBeVisible()
+  })
 })

@@ -1,6 +1,9 @@
+/** @vitest-environment jsdom */
+
 import { describe, expect, it } from "vitest";
 import { rsvpModal } from "./rsvpModalState";
 import EventFactory from "@client/__tests__/utils/factories/eventFactory";
+import { setQueryString } from "@client/__tests__/utils/locationHelpers";
 
 it('starts with default values', () => {
   expect(rsvpModal.show).toBe(false);
@@ -25,5 +28,19 @@ describe('close', () => {
     rsvpModal.close();
 
     expect(rsvpModal.show).toBe(false);
+  });
+});
+
+describe('getEventId', () => {
+  it('pulls the RSVP event id from the query parameter', () => {
+    setQueryString('?rsvp=1234')
+
+    expect(rsvpModal.getEventId()).toBe('1234');
+  });
+
+  it('returns null if event id is not present', () => {
+    setQueryString('')
+
+    expect(rsvpModal.getEventId()).toBe(null);
   });
 });

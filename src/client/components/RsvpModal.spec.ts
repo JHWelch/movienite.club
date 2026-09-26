@@ -7,6 +7,8 @@ import EventFactory from '@tests/utils/factories/eventFactory'
 import { rsvpModal } from '@client/state/rsvpModalState'
 import { fireConfetti } from '@client/utilities/confetti'
 import fetchMock from '@fetch-mock/vitest'
+import { render } from '@testing-library/vue'
+import { screen } from '@testing-library/dom'
 
 vi.mock(import('@client/utilities/confetti'), () => ({
   fireConfetti: vi.fn(),
@@ -15,6 +17,15 @@ vi.mock(import('@client/utilities/confetti'), () => ({
 afterEach(() => {
   localStorage.removeItem('rsvp.email')
   localStorage.removeItem('rsvp.name')
+})
+
+it('shows expected copy', () => {
+  rsvpModal.open(new EventFactory().build())
+  render(RsvpModal)
+
+  expect(screen.getByText('RSVP to:')).toBeVisible()
+  expect(screen.getByText('Let us know you are coming! Bring a friend if you like.')).toBeVisible()
+  expect(screen.getByText('Hope to see you soon!')).toBeVisible()
 })
 
 describe('name and email already set', () => {

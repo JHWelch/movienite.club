@@ -19,5 +19,5 @@ export const rsvpModal: RsvpModalState = reactive<RsvpModalState>({
   close: () => rsvpModal.show = false,
   getEventId: () => window?.location
     ? new URLSearchParams(window.location.search).get('rsvp')
-    : null
+    : null,
 })

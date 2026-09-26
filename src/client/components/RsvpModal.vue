@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import FormInput from '@components/form/FormInput.vue'
 import FormCheckbox from '@components/form/FormCheckbox.vue'
-import { rsvpModal } from '@client/state/modalState'
+import { rsvpModal } from '@client/state/rsvpModalState'
 import { fireConfetti } from '@client/utilities/confetti'
 import { CalendarDaysIcon } from '@heroicons/vue/24/solid'
 import { jsonHeaders } from '@client/data/headers'

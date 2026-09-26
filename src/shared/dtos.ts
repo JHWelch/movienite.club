@@ -59,3 +59,26 @@ export type MovieSearchDto = {
   tmdbId: number
   posterPath: string
 }
+
+export const isEventDto = (event: unknown): event is EventDto => {
+  return typeof event === 'object'
+    && event !== null
+    && 'id' in event
+    && typeof event.id === 'string'
+    && 'eventId' in event
+    && typeof event.eventId === 'string'
+    && 'theme' in event
+    && typeof event.theme === 'string'
+    && 'date' in event
+    && typeof event.date === 'string'
+    && 'isSkipped' in event
+    && typeof event.isSkipped === 'boolean'
+    && 'slug' in event
+    && (event.slug === null || typeof event.slug === 'string')
+    && 'styledTheme' in event
+    && Array.isArray(event.styledTheme)
+    && 'movies' in event
+    && Array.isArray(event.movies)
+    && 'submittedBy' in event
+    && (event.submittedBy === null || typeof event.submittedBy === 'string')
+}

@@ -38,7 +38,6 @@ it('will fetch and show the specified event', async () => {
       id: '2024-01-01',
     },
   })
-
   await flushPromises()
 
   expect(wrapper.text()).toContain('The Matrix')
@@ -53,7 +52,6 @@ it('will redirect to 404 if the event is not found', async () => {
       id: '2024-01-01',
     },
   })
-
   await flushPromises()
 
   expect(routerPushMock).toHaveBeenCalledWith('/404')
@@ -69,7 +67,6 @@ describe('rsvps', () => {
         id: '2024-01-01',
       },
     })
-
     await flushPromises()
 
     expect(screen.getByText('RSVP to:')).not.toBeVisible()
@@ -86,7 +83,6 @@ describe('rsvps', () => {
         id: '2024-01-01',
       },
     })
-
     await flushPromises()
 
     expect(screen.getByText('RSVP to:')).toBeVisible()
@@ -104,7 +100,6 @@ describe('rsvps', () => {
         id: 'slug-name',
       },
     })
-
     await flushPromises()
 
     expect(screen.getByText('RSVP to:')).toBeVisible()
@@ -119,7 +114,6 @@ describe('rsvps', () => {
         id: 'slug-name',
       },
     })
-
     await flushPromises()
 
     expect(screen.getByText('RSVP to:')).toBeVisible()

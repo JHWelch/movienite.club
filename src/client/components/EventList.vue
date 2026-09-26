@@ -5,7 +5,7 @@ import SectionTitle from '@components/SectionTitle.vue'
 import EventItem from '@components/EventItem.vue'
 import ErrorBanner from '@components/ErrorBanner.vue'
 import { EventDto } from '@shared/dtos'
-import { rsvpModal } from '@client/state/modalState'
+import { rsvpModal } from '@client/state/rsvpModalState'
 import RsvpModal from '@client/components/RsvpModal.vue'
 
 const props = withDefaults(defineProps<{
@@ -25,8 +25,6 @@ const props = withDefaults(defineProps<{
 const events = ref<EventDto[]>([])
 const loading = ref<boolean>(true)
 const error = ref<boolean>(false)
-
-const rsvpEvent = () => window?.location ? new URLSearchParams(window.location.search).get('rsvp') : null
 
 const reload = () => {
   loading.value = true
@@ -50,10 +48,10 @@ const reload = () => {
         props.onEmpty()
       }
 
-      const rsvp_event = rsvpEvent()
-      if (!rsvp_event) { return }
+      const rsvpEventId = rsvpModal.getEventId()
+      if (!rsvpEventId) { return }
 
-      const event = events.value.find(event => event.eventId === rsvp_event)
+      const event = events.value.find(event => event.eventId === rsvpEventId)
       if (!event) { return }
 
       rsvpModal.open(event)

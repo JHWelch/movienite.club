@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { CalendarDaysIcon } from '@heroicons/vue/24/solid'
 import { EventDto } from '@shared/dtos'
-import { rsvpModal } from '@client/state/modalState'
+import { rsvpModal } from '@client/state/rsvpModalState'
 import MovieList from '@components/MovieList.vue'
 import SkippedBanner from '@components/SkippedBanner.vue'
 import Theme from '@components/event/Theme.vue'

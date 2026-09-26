@@ -6,6 +6,7 @@ type RsvpModalState = {
   event?: EventDto
   open: (event?: EventDto) => void
   close: () => void
+  getEventId: () => string|null
 }
 
 export const rsvpModal: RsvpModalState = reactive<RsvpModalState>({
@@ -16,4 +17,7 @@ export const rsvpModal: RsvpModalState = reactive<RsvpModalState>({
     rsvpModal.event = event
   },
   close: () => rsvpModal.show = false,
+  getEventId: () => window?.location
+    ? new URLSearchParams(window.location.search).get('rsvp')
+    : null,
 })

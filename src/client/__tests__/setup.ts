@@ -1,5 +1,6 @@
 import { expect } from 'vitest'
 import { DOMWrapper, VueWrapper } from '@vue/test-utils'
+import '@testing-library/jest-dom/vitest'
 
 // Vue Wrapper helpers
 

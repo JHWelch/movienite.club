@@ -17,12 +17,19 @@ permissions:
 
 jobs:
   lint:
-    name: Lint
+    name: Lint & Fix
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v7
+
+    - name: Configure Git as GitHub App
+      id: app-token
+      uses: JHWelch/workflows/.github/workflows/configure-git-as-github-app.yml
+      with:
+        client-id: ${{ secrets.GH_APP_CLIENT_ID }}
+        private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
     - name: Install Node.js
       uses: actions/setup-node@v7
@@ -33,8 +40,21 @@ jobs:
     - name: Install Dependencies
       run: npm ci
 
-    - name: Run Lint
-      run: npm run lint
+    - name: Run Fix
+      run: npm run fix
+
+    - name: Commit fixed files
+      env:
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        BRANCH: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+      run: |
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "No changes to commit."
+          exit 0
+        fi
+        git add .
+        git commit -m 'Auto-fix lint issues'
+        git push origin "HEAD:$BRANCH"
 
   test:
     name: Test

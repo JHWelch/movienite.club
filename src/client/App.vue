@@ -2,7 +2,7 @@
 import AppFooter from '@components/AppFooter.vue'
 import NavBar from '@components/NavBar.vue'
 import Notifications from '@components/Notifications.vue'
-import DateChangeBanner from '@components/DateChangeBanner.vue'
+import AnnouncementBanner from '@components/AnnouncementBanner.vue'
 </script>
 
 <template>
@@ -10,7 +10,7 @@ import DateChangeBanner from '@components/DateChangeBanner.vue'
     <main class="flex flex-col justify-center w-full align-middle">
       <Notifications />
 
-      <DateChangeBanner />
+      <AnnouncementBanner />
 
       <NavBar />
 

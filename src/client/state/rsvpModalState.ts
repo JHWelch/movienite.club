@@ -13,8 +13,8 @@ export const rsvpModal: RsvpModalState = reactive<RsvpModalState>({
   show: false,
   event: undefined,
   open: (event?: EventDto) => {
-    rsvpModal.show = true
-    rsvpModal.event = event
+    rsvpModal.show = true;
+    rsvpModal.event = event;
   },
   close: () => rsvpModal.show = false,
   getEventId: () => window?.location

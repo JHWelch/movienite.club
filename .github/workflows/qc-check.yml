@@ -26,7 +26,7 @@ jobs:
 
     - name: Configure Git as GitHub App
       id: app-token
-      uses: JHWelch/workflows/.github/workflows/configure-git-as-github-app.yml
+      uses: JHWelch/workflows/.github/workflows/configure-git-as-github-app.yml@main
       with:
         client-id: ${{ secrets.GH_APP_CLIENT_ID }}
         private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}

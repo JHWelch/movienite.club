@@ -79,7 +79,7 @@
     "nodemon": "^3.1.14",
     "tailwindcss": "^4.3.1",
     "tsc-alias": "^1.9.5",
-    "vite": "^8.3.1",
+    "vite": "^8.3.4",
     "vitest": "^5.0.2",
     "vue": "^3.5.43",
     "vue-router": "^5.3.1",

@@ -1,0 +1,59 @@
+name: Create GitHub App token
+description: Create a GitHub App installation token and configure git to commit and push as the app's bot user.
+
+inputs:
+  client-id:
+    description: GitHub App client ID
+    required: true
+  private-key:
+    description: GitHub App private key
+    required: true
+
+outputs:
+  token:
+    description: GitHub App installation access token
+    value: ${{ steps.app-token.outputs.token }}
+  app-slug:
+    description: GitHub App slug
+    value: ${{ steps.app-token.outputs.app-slug }}
+  user-name:
+    description: Bot user name, e.g. `my-app[bot]`
+    value: ${{ steps.app-user.outputs.user-name }}
+  user-email:
+    description: Bot user noreply email
+    value: ${{ steps.app-user.outputs.user-email }}
+  author:
+    description: Bot user formatted as `name <email>`
+    value: ${{ steps.app-user.outputs.user-name }} <${{ steps.app-user.outputs.user-email }}>
+
+runs:
+  using: composite
+  steps:
+    - name: Create GitHub App token
+      id: app-token
+      uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3
+      with:
+        client-id: ${{ inputs.client-id }}
+        private-key: ${{ inputs.private-key }}
+
+    - name: Get GitHub App user
+      id: app-user
+      shell: bash
+      env:
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        USER_NAME: ${{ steps.app-token.outputs.app-slug }}[bot]
+      run: |
+        USER_ID=$(gh api "/users/$USER_NAME" --jq .id)
+        echo "user-name=$USER_NAME" >> "$GITHUB_OUTPUT"
+        echo "user-email=$USER_ID+$USER_NAME@users.noreply.github.com" >> "$GITHUB_OUTPUT"
+
+    - name: Configure git as GitHub App user
+      shell: bash
+      env:
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        USER_NAME: ${{ steps.app-user.outputs.user-name }}
+        USER_EMAIL: ${{ steps.app-user.outputs.user-email }}
+      run: |
+        git config --global user.name "$USER_NAME"
+        git config --global user.email "$USER_EMAIL"
+        gh auth setup-git

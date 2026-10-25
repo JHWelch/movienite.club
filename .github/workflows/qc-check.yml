@@ -30,11 +30,34 @@ jobs:
         node-version-file: .nvmrc
         cache: npm
 
+    - name: Create GitHub App token
+      id: app-token
+      uses: ./.github/actions/create-app-token
+      with:
+        client-id: ${{ secrets.GH_APP_CLIENT_ID }}
+        private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
     - name: Install Dependencies
       run: npm ci
 
-    - name: Run Lint
-      run: npm run lint
+    - name: Run Fixer
+      run: npm run fix
+
+    - name: Check for infinite loop
+      run: .github/workflows/scripts/check-previous-commit.sh "Lint & Fix"
+
+    - name: Commit linted files
+      env:
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        BRANCH: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+      run: |
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "No changes to commit."
+          exit 0
+        fi
+        git add .
+        git commit -m 'Lint & Fix'
+        git push origin "HEAD:$BRANCH"
 
   test:
     name: Test

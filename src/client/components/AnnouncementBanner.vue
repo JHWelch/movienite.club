@@ -10,8 +10,8 @@
         href="/october"
         class="underline hover:no-underline hover:text-primary-light"
       >
-      full schedule.
-    </a>
+        full schedule.
+      </a>
     </p>
   </div>
 </template>

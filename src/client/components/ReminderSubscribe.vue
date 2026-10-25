@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import FormInput from '@components/form/FormInput.vue'
 import { fireConfetti } from '@client/utilities/confetti'
 import { jsonHeaders } from '@client/data/headers'
@@ -8,6 +8,7 @@ import Button from '@components/buttons/Button.vue'
 
 const isOpen = ref<boolean>(false)
 const email = ref<string>('')
+const emailInput = ref<InstanceType<typeof FormInput> | null>(null)
 const { errors, handleErrors } = useErrorHandling()
 
 const subscribe = async (event: MouseEvent | KeyboardEvent) => {
@@ -30,16 +31,12 @@ const subscribe = async (event: MouseEvent | KeyboardEvent) => {
   email.value = ''
   fireConfetti()
 }
-const toggle = () => {
+const toggle = async () => {
   isOpen.value = !isOpen.value
 
   if (isOpen.value) {
-    setTimeout(() => {
-      const input = document?.querySelector('input[name="email"]') as HTMLInputElement
-      if (input) {
-        input.focus()
-      }
-    }, 100)
+    await nextTick()
+    emailInput.value?.focus()
   }
 }
 </script>
@@ -63,6 +60,7 @@ const toggle = () => {
 
     <div class="flex w-full space-x-4">
       <FormInput
+        ref="emailInput"
         v-model="email"
         name="email"
         :hide-label="true"

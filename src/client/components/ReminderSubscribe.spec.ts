@@ -20,10 +20,13 @@ vi.mock(import('js-confetti'), () => {
 })
 
 beforeEach(() => {
-  wrapper = mount(ReminderSubscribe)
+  wrapper = mount(ReminderSubscribe, { attachTo: document.body })
 })
 
 afterEach(() => {
+  wrapper.unmount()
+  vi.restoreAllMocks()
+  vi.useRealTimers()
   fetchMock.mockReset()
 })
 
@@ -31,6 +34,21 @@ it('renders "Get Reminders" button', () => {
   const button = wrapper.byTestId('get-reminders-button')
 
   expect(button.text()).toBe('Get Reminders!')
+})
+
+it('focuses the email input after opening the form', async () => {
+  await wrapper.byTestId('get-reminders-button').trigger('click')
+
+  expect(wrapper.find('input').element).toHaveFocus()
+})
+
+it('does not schedule a delayed focus callback', async () => {
+  vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] })
+  const setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout')
+
+  await wrapper.byTestId('get-reminders-button').trigger('click')
+
+  expect(setTimeoutSpy).not.toHaveBeenCalledWith(expect.any(Function), 100)
 })
 
 describe('press the "Get Reminders" button', () => {

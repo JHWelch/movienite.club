@@ -187,7 +187,7 @@ export class Event {
 
     const lastUpdatedEvent = DateTime
       .fromISO(properties['Last edited time'].last_edited_time)
-    const lastUpdatedMovie = lastUpdatedMovieProp.formula.type === 'date'
+    const lastUpdatedMovie = lastUpdatedMovieProp.formula.type === 'date' && lastUpdatedMovieProp.formula.date
       ? DateTime.fromISO(lastUpdatedMovieProp.formula.date.start)
       : null
 

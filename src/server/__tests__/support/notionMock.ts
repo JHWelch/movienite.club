@@ -116,7 +116,7 @@ export class NotionMock {
     movies?: NotionMovie[]
     styledTheme?: RichText[]
     lastEditedTime?: string
-    lastEditedMovieTime?: string
+    lastEditedMovieTime?: string | null
     submittedBy?: string | null
     tags?: string[]
     hideFromHome?: boolean

@@ -14,21 +14,21 @@ export const nCheckbox = (checked: boolean): {
   id: 'mockedId',
 })
 
-export const nDate = (start: string): {
+export const nDate = (start: string|null): {
   type: 'date'
   date: {
     start: string
     end: null
     time_zone: null
-  }
+  } | null
   id: string
 } => ({
   type: 'date',
-  date: {
+  date: start ? {
     start,
     end: null,
     time_zone: null,
-  },
+  } : null,
   id: 'mockedId',
 })
 
@@ -116,7 +116,7 @@ export const nLastEditedTime = (time: string): {
   id: 'mockedId',
 })
 
-export const nFormula = (result: string | null): {
+export const nFormula = (result: string | null, type: 'string' | 'date' = 'date'): {
   type: 'formula'
   formula: {
     type: 'string'
@@ -127,19 +127,19 @@ export const nFormula = (result: string | null): {
       start: string
       end: string | null
       time_zone: null
-    }
+    } | null
   }
   id: string
-} => result
+} => type === 'date'
   ? {
     type: 'formula',
     formula: {
       type: 'date',
-      date: {
+      date: result ? {
         start: result,
         end: null,
         time_zone: null,
-      },
+      } : null,
     },
     id: 'mockId',
   }
@@ -194,6 +194,7 @@ export const pageObjectResponse = (
   url: '',
   in_trash: false,
   is_locked: false,
+  is_archived: false,
 })
 
 export type QueryBody = {

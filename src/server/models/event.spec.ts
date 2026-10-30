@@ -132,6 +132,18 @@ describe('fromNotion', () => {
     })
   })
 
+  it('does not use lastEditedMovieTime if it is null', () => {
+    expect(Event.fromNotion(NotionMock.mockEvent({
+      id: 'eventId3',
+      date: '2021-01-15',
+      theme: 'theme3',
+      lastEditedTime: '2022-08-12T15:45:00.000Z',
+      lastEditedMovieTime: null,
+    }))).toMatchObject({
+      lastUpdated: DateTime.fromISO('2022-08-12T15:45:00.000Z'),
+    })
+  })
+
   it('uses lastEditedMovieTime if it is higher than lastEditedTime', () => {
     expect(Event.fromNotion(NotionMock.mockEvent({
       id: 'eventId3',

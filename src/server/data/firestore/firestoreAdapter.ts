@@ -72,23 +72,23 @@ export default class FirestoreAdapter {
     limit?: number
     tag?: string
   } = {}): Promise<Event[]> => {
-    let firestoreQuery = this.eventCollection
+    let query = this.eventCollection
       .where('date', '>=', this.today())
       .orderBy('date')
 
     if (args.limit) {
-      firestoreQuery = firestoreQuery.limit(args.limit)
+      query = query.limit(args.limit)
     }
 
-    firestoreQuery = args.tag
-      ? firestoreQuery.where('tags', 'array-contains', args.tag)
-      : firestoreQuery.where('hideFromHome', '!=', true)
+    query = args.tag
+      ? query.where('tags', 'array-contains', args.tag)
+      : query.where('hideFromHome', '!=', true)
 
-    return this.getEvents(firestoreQuery)
+    return this.getEvents(query)
   }
 
-  getEvents = async (firestoreQuery: Query): Promise<Event[]> => {
-    const querySnapshot = await firestoreQuery.get()
+  getEvents = async (query: Query): Promise<Event[]> => {
+    const querySnapshot = await query.get()
 
     return querySnapshot.docs
       .map((doc) => Event.fromFirebase(doc.data()))
@@ -143,7 +143,9 @@ export default class FirestoreAdapter {
   }
 
   getUsersWithReminders = async (): Promise<User[]> => {
-    const users = await this.usersCollection.where('reminders', '==', true).get()
+    const users = await this.usersCollection
+      .where('reminders', '==', true)
+      .get()
 
     return users.docs.map(User.fromFirebase)
   }

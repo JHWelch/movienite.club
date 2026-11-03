@@ -13,8 +13,7 @@ import { TZ } from '@server/config/tz'
 const { res, mockClear } = getMockRes()
 
 vi.mock('firebase-admin/app')
-vi.mock('firebase/app')
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 
 let config: Config
 let discord: DiscordAdapter

@@ -1,7 +1,7 @@
 import RsvpController from '@server/controllers/rsvpController'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { getMockReq, getMockRes } from '@tests/support/expressMocks'
-import { Timestamp, addDoc, setDoc } from 'firebase/firestore'
+import { Timestamp, collectionAdd, documentSet } from '@mocks/firebase-admin/firestore'
 import { FirebaseMock } from '@tests/support/firebaseMock'
 import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
 import { mockConfig } from '@tests/support/mockConfig'
@@ -16,7 +16,7 @@ import MockDate from 'mockdate'
 
 const { res, mockClear } = getMockRes()
 
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 
 beforeEach(() => {
   vi.clearAllMocks()
@@ -108,13 +108,13 @@ describe('store', () => {
       await new RsvpController(firestoreAdapter).store(req, res)
 
       expect(res.status).toHaveBeenCalledWith(201)
-      expect(addDoc).toHaveBeenCalledWith(
+      expect(collectionAdd).toHaveBeenCalledWith(
         FirebaseMock.mockCollection('rsvps'),
         {
           event: '2021-01-01',
           name: 'test name',
           email: 'test@example.com',
-          createdAt: expect.any(Timestamp.constructor),
+          createdAt: expect.any(Timestamp),
         },
       )
     })
@@ -123,7 +123,7 @@ describe('store', () => {
       await new RsvpController(firestoreAdapter).store(req, res)
 
       expect(res.status).toHaveBeenCalledWith(201)
-      expect(addDoc).toHaveBeenCalledWith(
+      expect(collectionAdd).toHaveBeenCalledWith(
         FirebaseMock.mockCollection('mail'),
         {
           to: 'ADMIN_EMAIL@example.com',
@@ -140,7 +140,7 @@ describe('store', () => {
       await new RsvpController(firestoreAdapter).store(req, res)
 
       expect(res.status).toHaveBeenCalledWith(201)
-      expect(addDoc).toHaveBeenCalledWith(
+      expect(collectionAdd).toHaveBeenCalledWith(
         FirebaseMock.mockCollection('mail'),
         {
           to: 'test@example.com',
@@ -181,13 +181,13 @@ describe('store', () => {
           await new RsvpController(firestoreAdapter).store(req, res)
 
           expect(res.status).toHaveBeenCalledWith(201)
-          expect(addDoc).toHaveBeenCalledWith(
+          expect(collectionAdd).toHaveBeenCalledWith(
             FirebaseMock.mockCollection('rsvps'),
             {
               event: '2021-01-01',
               name: 'test name',
               email: 'test@example.com',
-              createdAt: expect.any(Timestamp.constructor),
+              createdAt: expect.any(Timestamp),
             },
           )
         })
@@ -195,7 +195,7 @@ describe('store', () => {
         it('creates a new user with reminders enabled', async () => {
           await new RsvpController(firestoreAdapter).store(req, res)
 
-          expect(addDoc).toHaveBeenCalledWith(
+          expect(collectionAdd).toHaveBeenCalledWith(
             FirebaseMock.mockCollection('users'),
             {
               email: 'test@example.com',
@@ -218,13 +218,13 @@ describe('store', () => {
           await new RsvpController(firestoreAdapter).store(req, res)
 
           expect(res.status).toHaveBeenCalledWith(201)
-          expect(addDoc).toHaveBeenCalledWith(
+          expect(collectionAdd).toHaveBeenCalledWith(
             FirebaseMock.mockCollection('rsvps'),
             {
               event: '2021-01-01',
               name: 'test name',
               email: 'test@example.com',
-              createdAt: expect.any(Timestamp.constructor),
+              createdAt: expect.any(Timestamp),
             },
           )
         })
@@ -232,7 +232,7 @@ describe('store', () => {
         it('updates the user to be subscribed', async () => {
           await new RsvpController(firestoreAdapter).store(req, res)
 
-          expect(setDoc).toHaveBeenCalledWith(
+          expect(documentSet).toHaveBeenCalledWith(
             FirebaseMock.mockDoc('users', 'id'),
             {
               email: 'test@example.com',
@@ -255,13 +255,13 @@ describe('store', () => {
           await new RsvpController(firestoreAdapter).store(req, res)
 
           expect(res.status).toHaveBeenCalledWith(201)
-          expect(addDoc).toHaveBeenCalledWith(
+          expect(collectionAdd).toHaveBeenCalledWith(
             FirebaseMock.mockCollection('rsvps'),
             {
               event: '2021-01-01',
               name: 'test name',
               email: 'test@example.com',
-              createdAt: expect.any(Timestamp.constructor),
+              createdAt: expect.any(Timestamp),
             },
           )
         })
@@ -269,7 +269,7 @@ describe('store', () => {
         it('does not update users', async () => {
           await new RsvpController(firestoreAdapter).store(req, res)
 
-          expect(setDoc).not.toHaveBeenCalled()
+          expect(documentSet).not.toHaveBeenCalled()
         })
       })
     })
@@ -298,13 +298,13 @@ describe('store', () => {
         await new RsvpController(firestoreAdapter).store(req, res)
 
         expect(res.status).toHaveBeenCalledWith(201)
-        expect(addDoc).toHaveBeenCalledWith(
+        expect(collectionAdd).toHaveBeenCalledWith(
           FirebaseMock.mockCollection('rsvps'),
           {
             event: '2021-01-01',
             name: 'test name',
             email: null,
-            createdAt: expect.any(Timestamp.constructor),
+            createdAt: expect.any(Timestamp),
           },
         )
       })
@@ -313,7 +313,7 @@ describe('store', () => {
         await new RsvpController(firestoreAdapter).store(req, res)
 
         expect(res.status).toHaveBeenCalledWith(201)
-        expect(addDoc).toHaveBeenCalledWith(
+        expect(collectionAdd).toHaveBeenCalledWith(
           FirebaseMock.mockCollection('mail'),
           {
             to: 'ADMIN_EMAIL@example.com',
@@ -330,7 +330,7 @@ describe('store', () => {
         await new RsvpController(firestoreAdapter).store(req, res)
 
         expect(res.status).toHaveBeenCalledWith(201)
-        expect(addDoc).toHaveBeenCalledTimes(2) // rsvp and admin email
+        expect(collectionAdd).toHaveBeenCalledTimes(2) // rsvp and admin email
       })
 
       describe('reminders is selected', () => {

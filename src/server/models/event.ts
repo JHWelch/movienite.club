@@ -3,7 +3,7 @@ import {
 } from '@notionhq/client/build/src/api-endpoints'
 import { Movie, MovieDtoOptions } from '@server/models/movie'
 import type EventProperties from '@server/types/eventProperties'
-import { DocumentData, Timestamp, WithFieldValue } from 'firebase/firestore'
+import { DocumentData, Timestamp, WithFieldValue } from 'firebase-admin/firestore'
 import { FirestoreEvent } from '@server/data/firestore/firestoreTypes'
 import { RichText, EventDto } from '@shared/dtos'
 import { timeStringAsMinutes } from '@server/helpers/timeStrings'

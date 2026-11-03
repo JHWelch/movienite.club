@@ -14,7 +14,7 @@ import { TZ } from '@server/config/tz'
 
 const { res, mockClear } = getMockRes()
 
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 
 beforeEach(() => {
   vitest.clearAllMocks()

@@ -10,7 +10,7 @@ import {
 import { NotionMock } from '@tests/support/notionMock'
 import NotionAdapter from '@server/data/notion/notionAdapter'
 import CacheController from '@server/controllers/cacheEventsController'
-import { transaction } from '@mocks/firebase/firestore'
+import { transaction } from '@mocks/firebase-admin/firestore'
 import { Request } from 'express'
 import { Event } from '@server/models/event'
 import { FirebaseMock } from '@tests/support/firebaseMock'
@@ -26,14 +26,13 @@ import MockDate from 'mockdate'
 import { RichText } from '@shared/dtos'
 import { DateTime } from 'luxon'
 import { TZ } from '@server/config/tz'
-import { setDoc, Timestamp } from 'firebase/firestore'
+import { documentSet, Timestamp } from '@mocks/firebase-admin/firestore'
 import { getMockReq, getMockRes } from '@tests/support/expressMocks'
 
 let notionMock: NotionMock
 
 vi.mock('firebase-admin/app')
-vi.mock('firebase/app')
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 vi.mock('@notionhq/client')
 vi.mock('@server/helpers/directoryPath')
 
@@ -232,7 +231,7 @@ describe('store', () => {
     it('stores the lastUpdated metadata in firestore', async () => {
       await newCacheController().store(req, res)
 
-      expect(setDoc).toHaveBeenCalledWith(
+      expect(documentSet).toHaveBeenCalledWith(
         FirebaseMock.mockDoc('globals', 'lastUpdated'),
         { value: {
           updatedEvents: 3,
@@ -363,7 +362,7 @@ describe('store', () => {
     it('updates the lastUpdated date in firestore', async () => {
       await newCacheController().store(req, res)
 
-      expect(setDoc).toHaveBeenCalledWith(
+      expect(documentSet).toHaveBeenCalledWith(
         FirebaseMock.mockDoc('globals', 'lastUpdated'),
         { value: {
           updatedEvents: 3,
@@ -403,7 +402,7 @@ describe('store', () => {
     it('updates lastUpdated', async () => {
       await newCacheController().store(req, res)
 
-      expect(setDoc).toHaveBeenCalledWith(
+      expect(documentSet).toHaveBeenCalledWith(
         FirebaseMock.mockDoc('globals', 'lastUpdated'),
         { value: {
           updatedEvents: 0,

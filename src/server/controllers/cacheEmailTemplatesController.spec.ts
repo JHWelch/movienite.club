@@ -9,7 +9,7 @@ import {
 } from 'vitest'
 import { getMockReq, getMockRes } from '@tests/support/expressMocks'
 import CacheEmailTemplatesController from '@server/controllers/cacheEmailTemplatesController'
-import { transaction } from '@mocks/firebase/firestore'
+import { transaction } from '@mocks/firebase-admin/firestore'
 import { Request } from 'express'
 import { FirebaseMock } from '@tests/support/firebaseMock'
 import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
@@ -28,8 +28,7 @@ const newCacheController = () => {
 }
 
 vi.mock('firebase-admin/app')
-vi.mock('firebase/app')
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 vi.mock('@server/helpers/directoryPath')
 
 beforeAll(() => {

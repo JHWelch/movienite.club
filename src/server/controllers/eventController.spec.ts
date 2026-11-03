@@ -13,14 +13,13 @@ import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
 import { mockConfig } from '@tests/support/mockConfig'
 import { DateTime } from 'luxon'
 import { TZ } from '@server/config/tz'
-import { query } from 'firebase/firestore'
+import { query } from '@mocks/firebase-admin/firestore'
 import MovieFactory from '@tests/support/factories/movieFactory'
 
 const { res, mockClear } = getMockRes()
 
 vi.mock('firebase-admin/app')
-vi.mock('firebase/app')
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 
 beforeEach(() => {
   vi.clearAllMocks()

@@ -1,25 +1,12 @@
 import {
-  addDoc,
-  and,
-  collection,
   CollectionReference,
-  deleteDoc,
-  doc,
   DocumentData,
   Firestore as FirestoreType,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
   Primitive,
-  query,
   Query,
-  runTransaction,
-  setDoc,
   Timestamp,
-  where,
   WithFieldValue,
-} from 'firebase/firestore'
+} from 'firebase-admin/firestore'
 import { Event } from '@server/models/event'
 import setupFirestore from '@server/config/firestore'
 import Config from '@server/config/config'
@@ -47,84 +34,72 @@ export default class FirestoreAdapter {
   getGlobal = async <AppDataType>(
     key: string,
   ): Promise<Primitive|Timestamp|WithFieldValue<AppDataType>|null> => {
-    const document = await getDoc(doc(
-      this.firestore,
-      FirestoreAdapter.globalsCollectionName,
-      key,
-    ))
+    const document = await this.firestore
+      .collection(FirestoreAdapter.globalsCollectionName).doc(key).get()
 
-    if (!document.exists()) {
+    if (!document.exists) {
       return null
     }
 
-    return document.data().value
+    return document.data()?.value
   }
 
   setGlobal = async <AppDataType>(
     key: string,
     value: Primitive|Timestamp|WithFieldValue<AppDataType>,
   ): Promise<void> => {
-    setDoc(doc(
-      this.firestore,
-      FirestoreAdapter.globalsCollectionName,
-      key,
-    ), { value })
+    await this.firestore.collection(FirestoreAdapter.globalsCollectionName)
+      .doc(key).set({ value })
   }
 
   cacheEvents = async (events: Event[]): Promise<void> => {
-    await runTransaction(this.firestore, async (transaction) => {
+    await this.firestore.runTransaction(async (transaction) => {
       events.forEach((event: Event) => {
-        const ref = doc(
-          this.firestore,
-          FirestoreAdapter.eventsCollectionName,
-          event.dateString,
-        )
+        const ref = this.eventCollection.doc(event.dateString)
         transaction.set(ref, event.toFirebaseDTO())
       })
     })
   }
 
   getPastEvents = async (): Promise<Event[]> => {
-    return this.getEvents(query(
-      this.eventCollection,
-      and(
-        where('date', '<', this.today()),
-        where('isSkipped', '==', false),
-      ),
-      orderBy('date', 'desc'),
-    ))
+    return this.getEvents(this.eventCollection
+      .where('date', '<', this.today())
+      .where('isSkipped', '==', false)
+      .orderBy('date', 'desc'))
   }
 
   getUpcomingEvents = async (args: {
     limit?: number
     tag?: string
   } = {}): Promise<Event[]> => {
-    return this.getEvents(query(
-      this.eventCollection,
-      where('date', '>=', this.today()),
-      orderBy('date'),
-      ...args.limit ? [limit(args.limit)] : [],
-      ...args.tag
-        ? [where('tags', 'array-contains', args.tag)]
-        : [where('hideFromHome', '!=', true)],
-    ))
+    let query = this.eventCollection
+      .where('date', '>=', this.today())
+      .orderBy('date')
+
+    if (args.limit) {
+      query = query.limit(args.limit)
+    }
+
+    query = args.tag
+      ? query.where('tags', 'array-contains', args.tag)
+      : query.where('hideFromHome', '!=', true)
+
+    return this.getEvents(query)
   }
 
-  getEvents = async (firestoreQuery: Query): Promise<Event[]> => {
-    const querySnapshot = await getDocs(firestoreQuery)
+  getEvents = async (query: Query): Promise<Event[]> => {
+    const querySnapshot = await query.get()
 
     return querySnapshot.docs
       .map((doc) => Event.fromFirebase(doc.data()))
   }
 
   getEvent = async (dateString: string): Promise<Event|null> => {
-    const document = await getDoc(doc(this.eventCollection, dateString))
+    const document = await this.eventCollection.doc(dateString).get()
 
-    if (!document?.exists()) {
-      const documents = await getDocs(query(
-        this.eventCollection,
-        where('slug', '==', dateString),
-      ))
+    if (!document.exists) {
+      const documents = await this.eventCollection
+        .where('slug', '==', dateString).get()
 
       if (documents.docs.length === 0) {
         return null
@@ -133,7 +108,7 @@ export default class FirestoreAdapter {
       return Event.fromFirebase(documents.docs[0].data())
     }
 
-    return Event.fromFirebase(document.data())
+    return Event.fromFirebase(document.data()!)
   }
 
   createRsvp = async (
@@ -141,7 +116,7 @@ export default class FirestoreAdapter {
     name: string,
     email: string | undefined,
   ): Promise<void> => {
-    await addDoc(this.rsvpCollection, {
+    await this.rsvpCollection.add({
       event,
       name,
       createdAt: Timestamp.now(),
@@ -150,18 +125,15 @@ export default class FirestoreAdapter {
   }
 
   createUser = async (email: string, reminders: boolean): Promise<void> => {
-    await addDoc(this.usersCollection, {
+    await this.usersCollection.add({
       email,
       reminders,
     })
   }
 
   getUserByEmail = async (email: string): Promise<User|null> => {
-    const users = await getDocs(query(
-      this.usersCollection,
-      where('email', '==', email),
-      limit(1),
-    ))
+    const users = await this.usersCollection
+      .where('email', '==', email).limit(1).get()
 
     if (users.docs.length === 0) {
       return null
@@ -171,32 +143,23 @@ export default class FirestoreAdapter {
   }
 
   getUsersWithReminders = async (): Promise<User[]> => {
-    const users = await getDocs(query(
-      this.usersCollection,
-      where('reminders', '==', true),
-    ))
+    const users = await this.usersCollection
+      .where('reminders', '==', true)
+      .get()
 
     return users.docs.map(User.fromFirebase)
   }
 
   updateUser = async (user: User): Promise<void> => {
-    setDoc(doc(
-      this.firestore,
-      FirestoreAdapter.usersCollectionName,
-      user.id,
-    ), user.toFirebaseDTO())
+    await this.usersCollection.doc(user.id).set(user.toFirebaseDTO())
   }
 
   deleteUser = async (id: string): Promise<void> => {
-    await deleteDoc(doc(
-      this.firestore,
-      FirestoreAdapter.usersCollectionName,
-      id,
-    ))
+    await this.usersCollection.doc(id).delete()
   }
 
   sendEmail = async (to: string, message: EmailMessage): Promise<void> => {
-    await addDoc(this.mailCollection, {
+    await this.mailCollection.add({
       to,
       message,
     })
@@ -207,7 +170,7 @@ export default class FirestoreAdapter {
     templateName: string,
     templateData: Record<string, unknown>,
   ): Promise<void> => {
-    await addDoc(this.mailCollection, {
+    await this.mailCollection.add({
       to,
       template: {
         name: templateName,
@@ -223,13 +186,9 @@ export default class FirestoreAdapter {
       data: Record<string, unknown>
     }[],
   ): Promise<void> => {
-    await runTransaction(this.firestore, async (transaction) => {
+    await this.firestore.runTransaction(async (transaction) => {
       emails.forEach((email) => {
-        const ref = doc(
-          this.firestore,
-          FirestoreAdapter.mailCollectionName,
-          randomUUID(),
-        )
+        const ref = this.mailCollection.doc(randomUUID())
 
         transaction.set(ref, {
           to: email.to,
@@ -246,13 +205,11 @@ export default class FirestoreAdapter {
     name: string
     data: Record<string, unknown>
   }[]): Promise<void> => {
-    await runTransaction(this.firestore, async (transaction) => {
+    await this.firestore.runTransaction(async (transaction) => {
       templates.forEach((template) => {
-        transaction.set(doc(
-          this.firestore,
-          FirestoreAdapter.templatesCollectionName,
-          template.name,
-        ), template.data)
+        transaction.set(this.firestore
+          .collection(FirestoreAdapter.templatesCollectionName)
+          .doc(template.name), template.data)
       })
     })
   }
@@ -268,19 +225,19 @@ export default class FirestoreAdapter {
   }
 
   private get mailCollection (): Collection {
-    return collection(this.firestore, FirestoreAdapter.mailCollectionName)
+    return this.firestore.collection(FirestoreAdapter.mailCollectionName)
   }
 
   private get rsvpCollection (): Collection {
-    return collection(this.firestore, FirestoreAdapter.rsvpsCollectionName)
+    return this.firestore.collection(FirestoreAdapter.rsvpsCollectionName)
   }
 
   private get usersCollection (): Collection {
-    return collection(this.firestore, FirestoreAdapter.usersCollectionName)
+    return this.firestore.collection(FirestoreAdapter.usersCollectionName)
   }
 
   private get eventCollection (): Collection {
-    return collection(this.firestore, FirestoreAdapter.eventsCollectionName)
+    return this.firestore.collection(FirestoreAdapter.eventsCollectionName)
   }
 }
 

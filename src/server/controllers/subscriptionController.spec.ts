@@ -13,7 +13,7 @@ import { Request } from 'express'
 import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
 import { mockConfig } from '@tests/support/mockConfig'
 import { FirebaseMock } from '@tests/support/firebaseMock'
-import { addDoc, deleteDoc, setDoc } from 'firebase/firestore'
+import { collectionAdd, documentDelete, documentSet } from '@mocks/firebase-admin/firestore'
 import { withMessage } from '@server/helpers/messageBuilder'
 
 const { res, mockClear } = getMockRes()
@@ -21,8 +21,7 @@ let req: Request
 let firestore: FirestoreAdapter
 
 vi.mock('firebase-admin/app')
-vi.mock('firebase/app')
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 
 beforeEach(() => {
   firestore = new FirestoreAdapter(mockConfig())
@@ -62,7 +61,7 @@ describe('store', () => {
       it('creates a new user with reminders enabled', async () => {
         await new SubscriptionController(firestore).store(req, res)
 
-        expect(addDoc).toHaveBeenCalledWith(
+        expect(collectionAdd).toHaveBeenCalledWith(
           FirebaseMock.mockCollection('users'),
           {
             email: 'test@example.com',
@@ -113,7 +112,7 @@ describe('store', () => {
       it('updates the user to be subscribed', async () => {
         await new SubscriptionController(firestore).store(req, res)
 
-        expect(setDoc).toHaveBeenCalledWith(
+        expect(documentSet).toHaveBeenCalledWith(
           FirebaseMock.mockDoc('users', 'id'),
           {
             email: 'test@example.com',
@@ -180,7 +179,7 @@ describe('destroy', () => {
     it('should delete the user', async () => {
       await new SubscriptionController(firestore).destroy(req, res)
 
-      expect(deleteDoc).toHaveBeenCalledWith(
+      expect(documentDelete).toHaveBeenCalledWith(
         FirebaseMock.mockDoc('users', 'id'),
       )
     })

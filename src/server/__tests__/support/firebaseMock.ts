@@ -1,34 +1,29 @@
+import { queryGet, documentGet } from '@mocks/firebase-admin/firestore'
 import {
-  getDocs as _getDocs,
-  getDoc as _getDoc,
   Timestamp,
   WithFieldValue,
   Primitive,
-} from 'firebase/firestore'
+} from 'firebase-admin/firestore'
 import { FirestoreEvent } from '@server/data/firestore/firestoreTypes'
 import { Event } from '@server/models/event'
 import { Movie } from '@server/models/movie'
 import { RichText } from '@shared/dtos'
 import { DateTime } from 'luxon'
 import { TZ } from '@server/config/tz'
-import { Mock } from 'vitest'
-
-const getDocs = _getDocs as Mock
-const getDoc = _getDoc as Mock
 
 export class FirebaseMock {
   static mockGetGlobal<AppDataType> (
     key: string,
     value?: Primitive|Timestamp|WithFieldValue<AppDataType>,
   ) {
-    getDoc.mockImplementation(() => ({
+    documentGet.mockImplementation(() => ({
       data: () => (value ? { value } : undefined),
-      exists: () => Boolean(value),
+      exists: Boolean(value),
     }))
   }
 
   static mockEvents (events: FirebaseEvent[]) {
-    getDocs.mockImplementation(() => ({
+    queryGet.mockImplementation(() => ({
       docs: events.map((event) => ({
         data: () => ({
           id: event.id,
@@ -48,7 +43,7 @@ export class FirebaseMock {
   }
 
   static mockGetEvent (event?: FirebaseEvent) {
-    getDoc.mockImplementation(() => ({
+    documentGet.mockImplementation(() => ({
       data: () => (event ? {
         id: event.id,
         theme: event.theme,
@@ -61,12 +56,12 @@ export class FirebaseMock {
           ? Timestamp.fromDate(new Date(event.lastEditedTime))
           : Timestamp.now(),
       } : undefined),
-      exists: () => Boolean(event),
+      exists: Boolean(event),
     }))
   }
 
   static mockGetUserByEmail (user?: FirebaseUser) {
-    getDocs.mockImplementation(() => ({
+    queryGet.mockImplementation(() => ({
       docs: user ? [{
         id: user.id,
         data: () => ({
@@ -78,7 +73,7 @@ export class FirebaseMock {
   }
 
   static mockGetUsers (users: FirebaseUser[] = []) {
-    getDocs.mockImplementation(() => ({
+    queryGet.mockImplementation(() => ({
       docs: users.map((user) => ({
         id: user.id,
         data: () => ({

@@ -6,18 +6,18 @@ import {
   it,
   vi,
 } from 'vitest'
-import { initializeApp } from 'firebase/app'
+import { initializeApp } from 'firebase-admin/app'
 import { applicationDefault } from 'firebase-admin/app'
 import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
 import {
   Timestamp,
-  addDoc,
-  deleteDoc,
+  collectionAdd,
+  documentDelete,
   getFirestore,
   query,
-  setDoc,
-} from 'firebase/firestore'
-import { transaction } from '@mocks/firebase/firestore'
+  documentSet,
+} from '@mocks/firebase-admin/firestore'
+import { transaction } from '@mocks/firebase-admin/firestore'
 import { FirebaseMock } from '@tests/support/firebaseMock'
 import { Event } from '@server/models/event'
 import { mockConfig } from '@tests/support/mockConfig'
@@ -29,8 +29,7 @@ import { TZ } from '@server/config/tz'
 import MockDate from 'mockdate'
 
 vi.mock('firebase-admin/app')
-vi.mock('firebase/app')
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 
 let firestore: FirestoreAdapter
 let now: DateTime
@@ -240,10 +239,8 @@ describe('getPastEvents', () => {
 
     expect(query).toHaveBeenCalledWith(
       { firestore: { firestore: 'firestore' }, collectionPath: 'events' },
-      { and: [
-        { fieldPath: 'date', opStr: '<', value: firestore.today() },
-        { fieldPath: 'isSkipped', opStr: '==', value: false },
-      ] },
+      { fieldPath: 'date', opStr: '<', value: firestore.today() },
+      { fieldPath: 'isSkipped', opStr: '==', value: false },
       { fieldPath: 'date', directionStr: 'desc' },
     )
   })
@@ -410,7 +407,7 @@ describe('createUser', () => {
   it('creates a user in firestore', async () => {
     await firestore.createUser('test@example.com', true)
 
-    expect(addDoc).toHaveBeenCalledWith(
+    expect(collectionAdd).toHaveBeenCalledWith(
       FirebaseMock.mockCollection('users'),
       {
         email: 'test@example.com',
@@ -511,7 +508,7 @@ describe('updateUser', () => {
   it('updates a user in firestore', async () => {
     await firestore.updateUser(new User('id', 'test@example.com', true))
 
-    expect(setDoc).toHaveBeenCalledWith(
+    expect(documentSet).toHaveBeenCalledWith(
       FirebaseMock.mockDoc('users', 'id'),
       {
         email: 'test@example.com',
@@ -525,7 +522,7 @@ describe('deleteUser', () => {
   it('deletes a user in firestore', async () => {
     await firestore.deleteUser('id')
 
-    expect(deleteDoc).toHaveBeenCalledWith(
+    expect(documentDelete).toHaveBeenCalledWith(
       FirebaseMock.mockDoc('users', 'id'),
     )
   })
@@ -539,13 +536,13 @@ describe('createRsvp', () => {
       'test@example.com',
     )
 
-    expect(addDoc).toHaveBeenCalledWith(
+    expect(collectionAdd).toHaveBeenCalledWith(
       FirebaseMock.mockCollection('rsvps'),
       {
         event: '2023-01-01',
         name: 'test name',
         email: 'test@example.com',
-        createdAt: expect.any(Timestamp.constructor),
+        createdAt: expect.any(Timestamp),
       },
     )
   })
@@ -559,7 +556,7 @@ describe ('sendEmail', () => {
       html: 'test <p>html</p>',
     })
 
-    expect(addDoc).toHaveBeenCalledWith(
+    expect(collectionAdd).toHaveBeenCalledWith(
       FirebaseMock.mockCollection('mail'),
       {
         to: 'jsmith@example.com',
@@ -592,7 +589,7 @@ describe('sendEmailTemplate', () => {
           ],
         })
 
-      expect(addDoc).toHaveBeenCalledWith(FirebaseMock.mockCollection('mail'), {
+      expect(collectionAdd).toHaveBeenCalledWith(FirebaseMock.mockCollection('mail'), {
         to: 'jsmith@example.com',
         template: {
           name: 'rsvpConfirmation',
@@ -737,7 +734,7 @@ describe ('setGlobal', () => {
   ])('can store a primitive value in globals', async (data) => {
     await firestore.setGlobal('testKey', data)
 
-    expect(setDoc).toHaveBeenCalledWith(
+    expect(documentSet).toHaveBeenCalledWith(
       FirebaseMock.mockDoc('globals', 'testKey'),
       { value: data },
     )
@@ -747,7 +744,7 @@ describe ('setGlobal', () => {
     const expected = { key: 'value', nested: { key: 'value' } }
     await firestore.setGlobal('testKey', expected)
 
-    expect(setDoc).toHaveBeenCalledWith(
+    expect(documentSet).toHaveBeenCalledWith(
       FirebaseMock.mockDoc('globals', 'testKey'),
       { value: expected },
     )

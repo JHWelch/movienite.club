@@ -5,10 +5,10 @@ import { CronController } from '@server/controllers/cronController'
 import FirestoreAdapter from '@server/data/firestore/firestoreAdapter'
 import { mockConfig } from '@tests/support/mockConfig'
 import { FirebaseMock } from '@tests/support/firebaseMock'
-import { transaction } from '@mocks/firebase/firestore'
+import { transaction } from '@mocks/firebase-admin/firestore'
 import { TMDB_POSTER_URL } from '@server/data/tmdb/constants'
 import Config from '@server/config/config'
-import { getDocs } from 'firebase/firestore'
+import { queryGet } from '@mocks/firebase-admin/firestore'
 import { DateTime } from 'luxon'
 import { TZ } from '@server/config/tz'
 import { mockFetch } from '@server/__tests__/support/fetchMock'
@@ -23,8 +23,7 @@ let firestore: FirestoreAdapter
 let cronController: CronController
 
 vi.mock('firebase-admin/app')
-vi.mock('firebase/app')
-vi.mock('firebase/firestore')
+vi.mock('firebase-admin/firestore')
 
 beforeEach(() => {
   mockClear()
@@ -195,7 +194,7 @@ describe('reminders', () => {
 
       expect(res.status).toHaveBeenCalledWith(200)
       expect(res.send).toHaveBeenCalledWith('ok')
-      expect(getDocs).not.toHaveBeenCalled()
+      expect(queryGet).not.toHaveBeenCalled()
     })
   })
 
@@ -216,7 +215,7 @@ describe('reminders', () => {
 
       expect(res.status).toHaveBeenCalledWith(200)
       expect(res.send).toHaveBeenCalledWith('ok')
-      expect(getDocs).not.toHaveBeenCalled()
+      expect(queryGet).not.toHaveBeenCalled()
     })
   })
 })

@@ -1,19 +1,22 @@
-import { getFirestore, Firestore, connectFirestoreEmulator } from 'firebase/firestore'
-import { initializeApp } from 'firebase/app'
-import { applicationDefault } from 'firebase-admin/app'
+import { getFirestore, Firestore } from 'firebase-admin/firestore'
+import { applicationDefault, getApps, initializeApp } from 'firebase-admin/app'
 import Config from '@server/config/config'
 
 export default function setupFirestore (config: Config): Firestore {
+  if (config.isProduction && process.env.FIRESTORE_EMULATOR_HOST) {
+    throw new Error('FIRESTORE_EMULATOR_HOST must not be set in production')
+  }
+
+  if (!config.isProduction) {
+    process.env.FIRESTORE_EMULATOR_HOST ??= 'localhost:8888'
+  }
+
   const firebaseConfig = {
     credential: applicationDefault(),
     projectId: config.googleCloudProject,
   }
 
-  const app = getFirestore(initializeApp(firebaseConfig))
+  const app = getApps()[0] ?? initializeApp(firebaseConfig)
 
-  if (!config.isProduction) {
-    connectFirestoreEmulator(app, 'localhost', 8888)
-  }
-
-  return app
+  return getFirestore(app)
 }

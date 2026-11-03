@@ -18,6 +18,7 @@
     "clean": "rm -rf dist",
     "start": "NODE_ENV=production tsx src/server/main.ts",
     "test": "vitest",
+    "test:firestore": "firebase emulators:exec --only firestore --project demo-movienite 'RUN_FIRESTORE_SECURITY_TESTS=true vitest run src/server/config/firestoreSecurity.spec.ts'",
     "test:snapshots": "vitest -u",
     "types": "vue-tsc -p tsconfig.build.json --noEmit",
     "coverage": "vitest run --coverage"
@@ -38,7 +39,6 @@
     "dotenv": "^18.0.9",
     "ejs": "^7.0.2",
     "express": "^5.2.1",
-    "firebase": "^13.1.0",
     "firebase-admin": "^14.5.0",
     "ics": "^3.12.1",
     "luxon": "^3.7.2",

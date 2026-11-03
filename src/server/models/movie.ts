@@ -4,7 +4,7 @@ import {
   type PageObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints'
 import type MovieProperties from '@server/types/movieProperties'
-import { DocumentData, WithFieldValue } from 'firebase/firestore'
+import { DocumentData, WithFieldValue } from 'firebase-admin/firestore'
 import MovieResponse from '@server/data/tmdb/dtos/movieResponse'
 import {
   notionNumber,

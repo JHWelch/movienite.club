@@ -1,14 +1,15 @@
 # movienite.club
+
+This is an example
+
 [![App Engine Build](https://github.com/JHWelch/movienite.club/actions/workflows/deploy-to-app-engine.yml/badge.svg)](https://github.com/JHWelch/movienite.club/deployments)
 
 An integration with [Notion](https://notion.so) to display weekly movie nights using a Notion database as the source of truth.
 
 ## Development
 
-### .env
-
 ```sh
-cp .env.example .env
+cp .env.example .env dadfa
 ```
 
 Update `.env` to include secrets.

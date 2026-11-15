@@ -45,10 +45,6 @@ npm run fix
 
 ### TypeScript Static Analysis
 
-```sh
-npm run types
-```
-
 ### Repository Structure
 
 This repository is split into two applications

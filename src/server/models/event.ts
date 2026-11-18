@@ -174,6 +174,10 @@ export class Event {
     return this.date.plus({ minutes: minutes - 30 })
   }
 
+  get rsvpUrl (): string {
+    return `events/${this.id}?rsvp`
+  }
+
   private breaks (movies: Movie[]): number {
     return (movies.length - 1) * 15
   }

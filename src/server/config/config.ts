@@ -31,6 +31,10 @@ export default class Config {
   get isProduction (): boolean {
     return this.nodeEnv === 'production'
   }
+
+  url (path: string): string {
+    return `${this.appUrl}/${path}`
+  }
 }
 
 const requiredVariable = (name: string): string => {

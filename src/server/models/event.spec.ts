@@ -156,3 +156,11 @@ describe('fromNotion', () => {
     })
   })
 })
+
+describe('rsvpUrl', () => {
+  it('returns the RSVP URL for the given event', () => {
+    const event = new EventFactory().make({ date: DateTime.fromISO('2026-11-18') })
+
+    expect(event.rsvpUrl).toEqual('events/2026-11-18?rsvp')
+  })
+})

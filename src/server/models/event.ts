@@ -175,7 +175,7 @@ export class Event {
   }
 
   get rsvpUrl (): string {
-    return `events/${this.id}?rsvp`
+    return `events/${this.dateString}?rsvp`
   }
 
   private breaks (movies: Movie[]): number {

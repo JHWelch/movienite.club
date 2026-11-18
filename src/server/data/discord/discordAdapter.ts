@@ -14,6 +14,7 @@ export default class DiscordAdapter {
       content: [
         `# Movie Nite Tomorrow (${event.monthDayDisplayDate})`,
         `## ${event.theme}`,
+        `[RSVP here](${this.config.url(event.rsvpUrl)})`,
         ...event.movies.map(this._movieListItem),
       ].join('\n'),
       embeds : event.movies.map((movie) => ({

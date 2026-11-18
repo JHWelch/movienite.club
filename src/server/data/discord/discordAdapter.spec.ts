@@ -45,7 +45,7 @@ describe('eventReminder', () => {
       expect(options?.method).toBe('POST')
       expect(options?.headers).toEqual({ 'Content-Type': 'application/json' })
       expect(options?.body).toBe(JSON.stringify({
-        content: '# Movie Nite Tomorrow (6/1)\n## AP English Lit\n[RSVP here](http://APP_URL.example.com/events/2024-06-01?rsvp)\n - **6:00PM** *Get Over It*\n - **8:00PM** *My Own Private Idaho*',
+        content: '# Movie Nite Tomorrow (6/1)\n## AP English Lit\n### [✉️ RSVP here](http://APP_URL.example.com/events/2024-06-01?rsvp)\n - **6:00PM** *Get Over It*\n - **8:00PM** *My Own Private Idaho*',
         embeds: [
           {
             title: '*Get Over It* (2001)',
@@ -94,7 +94,7 @@ describe('eventReminder', () => {
       expect(options?.method).toBe('POST')
       expect(options?.headers).toEqual({ 'Content-Type': 'application/json' })
       expect(JSON.parse(options?.body?.toString() ?? '').content)
-        .toBe('# Movie Nite Tomorrow (6/1)\n## Field Trip Week\n[RSVP here](http://APP_URL.example.com/events/2024-06-01?rsvp)\n - **9:45PM** *Fieldtrip Title* - [Fieldtrip Theater](https://fieldtrip.com/tickets)')
+        .toBe('# Movie Nite Tomorrow (6/1)\n## Field Trip Week\n### [✉️ RSVP here](http://APP_URL.example.com/events/2024-06-01?rsvp)\n - **9:45PM** *Fieldtrip Title* - [Fieldtrip Theater](https://fieldtrip.com/tickets)')
 
       return Promise.resolve(new Response(null, { status: 204 }))
     })

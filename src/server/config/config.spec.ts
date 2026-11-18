@@ -170,3 +170,11 @@ describe('isProduction', () => {
     })
   })
 })
+
+describe('url', () => {
+  it('appends the base url', () => {
+    const config = new Config()
+
+    expect(config.url('some/path')).toBe('http://APP_URL.example.com/some/path')
+  })
+})
